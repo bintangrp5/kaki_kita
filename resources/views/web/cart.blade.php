@@ -88,7 +88,7 @@
                             <span>Rp.{{ number_format($cart->calculatedPriceByQuantity(), 0, ',', '.') }}</span>
                         </div>
 
-                        <a href="{{ route('checkout') }}" class="btn btn-primary w-100 mt-3">
+                        <a href="{{ route('checkout.index') }}" class="btn btn-primary w-100 mt-3">
                             Lanjut ke Pembayaran
                         </a>
                     </div>

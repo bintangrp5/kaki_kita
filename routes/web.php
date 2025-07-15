@@ -8,8 +8,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 
 
 
@@ -20,7 +22,8 @@ Route::get('categories_brand', [HomepageController::class, 'categories_brand']);
 Route::get('category/{slug}', [HomepageController::class, 'category']);
 Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
 Route::get('cart', [HomepageController::class, 'cart'])->name('cart.index');
-Route::get('checkout', [HomepageController::class, 'checkout'])->name('checkout');
+
+
 
 Route::patch('/products/{id}/toggle-status', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
 
@@ -49,6 +52,28 @@ Route::group(['middleware' => ['is_customer_login']], function () {
         Route::patch('cart/update/{id}', 'update')->name('cart.update');
     });
 });
+
+// Group untuk customer orders
+// Route::group(['middleware' => ['is_customer_login']], function () {
+//     Route::controller(OrderController::class)->prefix('orders')->name('orders.')->group(function () {
+//         Route::get('/', 'index')->name('index');       // orders.index
+//         Route::get('/{id}', 'show')->name('show');     // orders.show
+//     });
+// });
+// Route::get('/order', [OrderController::class, 'index'])
+//     ->middleware(['auth'])
+//     ->name('order');
+Route::middleware('auth:customer')->group(function () {
+    Route::get('checkout', [HomepageController::class, 'checkout'])->name('checkout');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+    // Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    // Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+});
+
+
 
 // Group admin & dahboard
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], function () {

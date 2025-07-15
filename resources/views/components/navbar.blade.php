@@ -22,6 +22,8 @@
                 </ul>
                 <x-cart-icon></x-cart-icon>
 
+                <x-order-icon></x-order-icon>
+
                 @if(auth()->guard('customer')->check())
                 <div class="dropdown">
                     <a class="btn btn-outline-light dropdown-toggle" href="#"

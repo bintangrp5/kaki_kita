@@ -20,7 +20,7 @@
                         <tr>
                             <td>#{{ $order->id }}</td>
                             <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d M Y') }}</td>
-                            <td>Rp{{ number_format($order->total, 0, ',', '.') }}</td>
+                            <td>Rp{{ number_format($order->total_amount, 0, ',', '.') }}</td>
                             <td>
                                 @if ($order->status === 'completed')
                                     <span class="badge bg-success">Completed</span>
