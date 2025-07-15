@@ -19,8 +19,7 @@
     <option value="">-- Pilih Kategori --</option>
     @foreach ($categories as $category)
         <option value="{{ $category->id }}"
-            @selected(old('category_id', $brand->categories->first()->id ?? null) == $category->id)>
-            {{ $category->name }}
+            @selected(old('category_id', isset($brand) ? optional($brand->categories->first())->id : null) == $category->id)            {{ $category->name }}
         </option>
     @endforeach
 </flux:select>
