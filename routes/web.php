@@ -11,6 +11,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DetailOrderController;
 use App\Http\Controllers\CheckoutController;
 
 
@@ -63,12 +64,11 @@ Route::group(['middleware' => ['is_customer_login']], function () {
 // Route::get('/order', [OrderController::class, 'index'])
 //     ->middleware(['auth'])
 //     ->name('order');
+
 Route::middleware('auth:customer')->group(function () {
     Route::get('checkout', [HomepageController::class, 'checkout'])->name('checkout');
-Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
-    // Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    // Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 });
@@ -81,6 +81,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
     Route::resource('categories', ProductCategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('brands', BrandController::class);
+    Route::resource('detail_order', DetailOrderController::class);
     Route::post('products/sync/{id}', [ProductController::class, 'sync'])->name('products.sync');
     Route::post('category/sync/{id}', [ProductCategoryController::class, 'sync'])->name('category.sync');
 

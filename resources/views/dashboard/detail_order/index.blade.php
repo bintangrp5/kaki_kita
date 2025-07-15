@@ -1,4 +1,4 @@
-<x-layouts.app :title="__('Orders')">
+<x-layouts.app :title="__('Orders Detail')">
     <div class="relative mb-6 w-full">
         <flux:heading size="xl">Orders Management</flux:heading>
         <flux:subheading size="lg" class="mb-6">Manage customer orders efficiently</flux:subheading>
@@ -6,7 +6,9 @@
     </div>
 
     @if(session('success'))
-        <flux:badge color="lime" class="mb-4 w-full">{{ session('success') }}</flux:badge>
+        <flux:badge color="lime" class="mb-4 w-full">
+            {{ session('success') }}
+        </flux:badge>
     @endif
 
     <div class="overflow-x-auto">
@@ -22,15 +24,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($orders as $order)
+                @forelse ($orders as $order)
                     <tr>
                         <td class="px-5 py-5 border-b text-sm">#{{ $order->id }}</td>
                         <td class="px-5 py-5 border-b text-sm">
                             <p class="font-medium">{{ $order->customer->name ?? '-' }}</p>
                             <p class="text-xs text-gray-500">{{ $order->customer->email ?? '-' }}</p>
                         </td>
-                        <td class="px-5 py-5 border-b text-sm">{{ $order->order_date ?? $order->created_at->format('d M Y') }}</td>
-                        <td class="px-5 py-5 border-b text-sm">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</td>
+                        <td class="px-5 py-5 border-b text-sm">
+                            {{ $order->order_date ?? $order->created_at->format('d M Y') }}
+                        </td>
+                        <td class="px-5 py-5 border-b text-sm">
+                            <strong>Rp{{ number_format($order->total_amount, 0, ',', '.') }}</strong>
+                        </td>
                         <td class="px-5 py-5 border-b text-sm">
                             <form action="{{ route('detail_order.update', $order->id) }}" method="POST">
                                 @csrf
@@ -51,17 +57,16 @@
                                     <flux:menu.item icon="eye" href="{{ route('detail_order.edit', $order->id) }}">
                                         View Detail
                                     </flux:menu.item>
-                                    <!-- Optional future actions like Delete -->
                                 </flux:menu>
                             </flux:dropdown>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center text-gray-500 py-6">Tidak ada pesanan ditemukan.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
-
-        <div class="mt-4">
-            {{ $orders->links() }}
-        </div>
     </div>
 </x-layouts.app>
