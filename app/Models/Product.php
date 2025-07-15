@@ -20,7 +20,8 @@ class Product extends Model implements Cartable
         'sku',
         'product_category_id', 
         'image_url',
-        'is_active'
+        'is_active',
+        'brand_id'
     ];
 
     public function category()
@@ -30,5 +31,10 @@ class Product extends Model implements Cartable
     public function getPrice(): float
     {
         return $this->price;
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
     }
 }

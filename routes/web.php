@@ -7,6 +7,7 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\CartController;
 
@@ -15,9 +16,9 @@ use App\Http\Controllers\CartController;
 Route::get('/', [HomepageController::class, 'index'])->name('home');
 Route::get('products', [HomepageController::class, 'products'])->name('products');
 Route::get('product/{slug}', [HomepageController::class, 'product'])->name('product.show');
-Route::get('categories', [HomepageController::class, 'categories']);
+Route::get('categories_brand', [HomepageController::class, 'categories_brand']);
 Route::get('category/{slug}', [HomepageController::class, 'category']);
-
+Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
 Route::get('cart', [HomepageController::class, 'cart'])->name('cart.index');
 Route::get('checkout', [HomepageController::class, 'checkout'])->name('checkout.index');
 
@@ -54,6 +55,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
     Route::view('/', 'dashboard')->name('dashboard');
     Route::resource('categories', ProductCategoryController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('brands', BrandController::class);
     Route::post('products/sync/{id}', [ProductController::class, 'sync'])->name('products.sync');
     Route::post('category/sync/{id}', [ProductCategoryController::class, 'sync'])->name('category.sync');
 

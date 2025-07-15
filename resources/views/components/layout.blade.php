@@ -133,8 +133,7 @@
     <div class="container-fluid py-4">
         {{ $slot }}
     </div>
-    <footer class="bg-dark text-white pt-4 mt-5" style="background:
-linear-gradient(90deg, #4e54c8 0%, #8f94fb 100%);">
+    <footer class="bg-dark text-white pt-4 mt-5" style="background: linear-gradient(90deg, #0053C7 0%, #0065F8 100%);">
         <div class="container p-3">
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -145,12 +144,12 @@ linear-gradient(90deg, #4e54c8 0%, #8f94fb 100%);">
                 <div class="col-md-3 mb-3">
                     <h6 class="mb-3">Navigasi</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white
+                        <li><a href="/" class="text-white
 text-decoration-none">Beranda</a></li>
-                        <li><a href="#" class="text-white
-text-decoration-none">Produk</a></li>
-                        <li><a href="#" class="text-white
+                        <li><a href="/categories" class="text-white
 text-decoration-none">Kategori</a></li>
+                        <li><a href="/products" class="text-white
+text-decoration-none">Produk</a></li>
                         <li><a href="#" class="text-white
 text-decoration-none">Kontak</a></li>
                     </ul>

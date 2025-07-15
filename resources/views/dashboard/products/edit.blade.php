@@ -17,9 +17,20 @@
 
         <flux:input label="Name" name="name" class="mb-3" placeholder="Product Name" value="{{ old('name', $product->name) }}" />
         <flux:select label="Category" name="category_slug" class="mb-3">
-            @foreach ($categories as $category)
-                <option value="{{ $category->slug }}" {{ $product->category->slug == $category->slug ? 'selected' : '' }}>{{ $category->name }}</option>
+    <option value="">-- Pilih Kategori --</option>
+    @foreach ($categories as $category)
+        <option value="{{ $category->slug }}" 
+            @selected(old('category_slug', $brand->category_slug ?? '') == $category->slug)>
+            {{ $category->name }}
+        </option>
+    @endforeach
+</flux:select>
 
+
+        <flux:select label="Brand" name="brand_id" class="mb-3">
+            <option value="">Select Brand</option>
+            @foreach ($brands as $brand)
+                <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
             @endforeach
         </flux:select>
         <flux:input label="Slug" name="slug" class="mb-3" placeholder="product-name" value="{{ old('slug', $product->slug) }}" />

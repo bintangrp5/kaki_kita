@@ -28,7 +28,7 @@
         <table class="min-w-full leading-normal">
             <thead>
                 <tr>
-                    @foreach(['ID', 'Image', 'Name', 'Slug', 'SKU', 'Harga (Rp)', 'Stock', 'Status', 'Created At','On/Off', 'Actions'] as $heading)
+                    @foreach(['ID', 'Image', 'Name', 'Slug', 'Brand', 'SKU', 'Harga (Rp)', 'Stock', 'Status', 'Created At','On/Off', 'Actions'] as $heading)
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         {{ $heading }}
                     </th>
@@ -62,6 +62,11 @@
                     {{-- Slug --}}
                     <td class="px-5 py-5 border-b text-sm">
                         <p class="text-gray-900 whitespace-no-wrap">{{ $product->slug }}</p>
+                    </td>
+
+                    {{--Brand--}}
+                    <td class="px-5 py-5 border-b text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap">{{ $product->brand->name ?? '-' }}</p>
                     </td>
 
                     {{-- SKU --}}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Categories;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -28,7 +29,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Categories::all();
-        return view('dashboard.products.create', compact('categories'));
+        $brands = Brand::where('is_active', true)->orderBy('order')->get();
+        return view('dashboard.products.create', compact('categories', 'brands'));
     }
 
 
@@ -42,6 +44,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:products,name',  // Tambah unique di sini
             'category_slug' => 'required|string|exists:product_categories,slug',
+            'brand_id' => 'required|exists:brands,id',
             'slug' => 'required|string|max:255|unique:products,slug',
             'sku' => 'required|string|max:50|unique:products,sku',
             'description' => 'nullable|string',
@@ -72,6 +75,7 @@ class ProductController extends Controller
 
         Product::create([
             'name' => $validated['name'],
+            'brand_id' => $validated['brand_id'],
             'slug' => Str::slug($validated['slug']),
             'description' => $validated['description'],
             'price' => $validated['price'],
@@ -94,7 +98,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Categories::all();
-        return view('dashboard.products.edit', compact('product', 'categories'));
+        $brands = Brand::where('is_active', true)->orderBy('order')->get();
+        return view('dashboard.products.edit', compact('product', 'categories', 'brands'));
     }
 
 
@@ -107,6 +112,7 @@ class ProductController extends Controller
         $rules = [
             'name' => 'required|string|max:255|unique:products,name,' . $product->id,
             'category_slug' => 'required|string|exists:product_categories,slug',
+            'brand_id' => 'required|exists:brands,id',
             'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,
             'sku' => 'required|string|max:50|unique:products,sku,' . $product->id,
             'description' => 'nullable|string',
@@ -144,6 +150,7 @@ class ProductController extends Controller
             'price' => $validated['price'],
             'stock' => $validated['stock'],
             'product_category_id' => $category->id,
+            'brand_id' => $validated['brand_id'],
             'image_url' => $imageUrl,
             'is_active' => ((int) $validated['stock'] > 0),
         ]);

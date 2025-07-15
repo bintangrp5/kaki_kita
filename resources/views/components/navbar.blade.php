@@ -1,5 +1,5 @@
 <div>
-    <nav class="navbar navbar-expand-lg p-3" style="background: linear-gradient(90deg,#4e54c8 0%, #8f94fb 100%);">
+    <nav class="navbar navbar-expand-lg p-3" style="background: linear-gradient(90deg, #0053C7 0%, #0065F8 100%);">
         <div class="container">
             <a class="navbar-brand text-white" href="/">KakiKita</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
