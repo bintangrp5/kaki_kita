@@ -173,7 +173,7 @@ class ProductController extends Controller
               'sku' => $product->sku,
               'image_url' => $product->image_url,
               'weight' => $product->weight,
-              'is_active' => $request->is_active == 1 ? false : true,
+              'is_active' => $request->is_active == 1 ? true : false,
               'category_id' => (string) $product->category->hub_category_id,
           ]);
   
