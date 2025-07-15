@@ -14,6 +14,19 @@ class CartController extends Controller
     {
         $this->cart = Cart::query()->firstOrCreate(['user_id' => auth()->guard('customer')->user()->id]);
     }
+
+    public function index()
+{
+    $cart = Cart::with(['items', 'items.itemable'])
+        ->where('user_id', auth()->guard('customer')->id())
+        ->first();
+
+    return view('nama-folder-theme.cart', [ // ganti dengan nama blade-mu
+        'title' => 'Keranjang Belanja',
+        'cart' => $cart
+    ]);
+}
+
     public function add(Request $request)
     {
         // Validate the request
@@ -41,12 +54,14 @@ class CartController extends Controller
         $this->cart->items()->save($cartItem);
         return redirect()->route('cart.index')->with('success', 'Item added to cart.');
     }
+
     public function remove($id)
     {
         $product = Product::findOrFail($id);
         $this->cart->removeItem($product);
         return redirect()->route('cart.index')->with('success', 'Item removed from cart.');
     }
+
     public function update($id, Request $request)
     {
         $product = Product::findOrFail($id);

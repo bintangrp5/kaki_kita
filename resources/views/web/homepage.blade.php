@@ -245,45 +245,54 @@
     {{-- JavaScript untuk filter kategori --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.filter-category');
-            const brandItems = document.querySelectorAll('.brand-item');
+    const filterButtons = document.querySelectorAll('.filter-category');
+    const brandItems = document.querySelectorAll('.brand-item');
 
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const category = this.getAttribute('data-category');
+    // ✅ SET DEFAULT LINK SAAT FILTER = "Semua"
+    brandItems.forEach(item => {
+        const lihatBrandBtn = item.querySelector('.btn-lihat-brand');
+        const brandSlug = item.getAttribute('data-brand-slug');
+        if (lihatBrandBtn && brandSlug) {
+            lihatBrandBtn.setAttribute('href', '/categories_brand?brand=' + brandSlug);
+        }
+    });
 
-                    // Set active class
-                    filterButtons.forEach(b => {
-                        b.classList.remove('text-primary', 'active');
-                        b.classList.add('text-dark');
-                    });
-                    this.classList.remove('text-dark');
-                    this.classList.add('text-primary', 'active');
+    // ⬇️ Ini tetap seperti sebelumnya
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
 
-                    // Loop tiap brand dan update tampil + tombol
-                    brandItems.forEach(item => {
-                        const itemCategory = item.getAttribute('data-category');
-                        const lihatBrandBtn = item.querySelector('.btn-lihat-brand');
-                        const brandSlug = item.getAttribute('data-brand-slug'); // Tambahkan di HTML nanti
+            // Set active class
+            filterButtons.forEach(b => {
+                b.classList.remove('text-primary', 'active');
+                b.classList.add('text-dark');
+            });
+            this.classList.remove('text-dark');
+            this.classList.add('text-primary', 'active');
 
-                        if (category === 'all' || itemCategory.includes(category)) {
-                            item.style.display = 'block';
+            // Update brand tampil + tombol
+            brandItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                const lihatBrandBtn = item.querySelector('.btn-lihat-brand');
+                const brandSlug = item.getAttribute('data-brand-slug');
 
-                            // Update URL sesuai kategori + brand
-                            if (lihatBrandBtn) {
-                                if (category === 'all') {
-                                    lihatBrandBtn.setAttribute('href', '/categories_brand');
-                                } else {
-                                    lihatBrandBtn.setAttribute('href', '/category/' + category + '?brand=' + brandSlug);
-                                }
-                            }
+                if (category === 'all' || itemCategory.includes(category)) {
+                    item.style.display = 'block';
+
+                    if (lihatBrandBtn) {
+                        if (category === 'all') {
+                            lihatBrandBtn.setAttribute('href', '/categories_brand?brand=' + brandSlug);
                         } else {
-                            item.style.display = 'none';
+                            lihatBrandBtn.setAttribute('href', '/category/' + category + '?brand=' + brandSlug);
                         }
-                    });
-                });
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
             });
         });
+    });
+});
 
 
 

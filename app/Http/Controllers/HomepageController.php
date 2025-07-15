@@ -67,50 +67,94 @@ class HomepageController extends Controller
             'relatedProducts' => $relatedProducts,
         ]);
     }
-    public function categories_brand()
-    {
-        
-        $categories = Categories::latest()->paginate(20);
-        $brands = Brand::with('categories')->latest()->get();
-        return view($this->themeFolder . '.categories_brand', [
-            'title' => 'Categories',
-            'categories' => $categories,
-            'brands' => $brands,
-        ]);
-    }
-    public function category($slug, Request $request)
+
+    public function categories_brand(Request $request)
 {
-    $category = Categories::whereSlug($slug)->first();
+    $categories = Categories::all();
+    $brandSlug = $request->query('brand'); // Ambil slug brand dari query string
 
-    if (!$category) {
-        return abort(404);
-    }
-
-    $query = Product::where('product_category_id', $category->id);
-
-    // Jika ada parameter brand di URL, filter juga berdasarkan brand
-    if ($request->has('brand')) {
-        $brandSlug = $request->query('brand');
+    if ($brandSlug) {
         $brand = Brand::where('slug', $brandSlug)->first();
 
-        if ($brand) {
-            $query->where('brand_id', $brand->id);
+        if (!$brand) {
+            abort(404); // Jika brand tidak ditemukan
         }
+
+        // Ambil semua produk berdasarkan brand tersebut
+        $products = Product::with(['brand', 'category'])
+            ->where('brand_id', $brand->id)
+            ->latest()
+            ->paginate(20);
+    } else {
+        // Jika tidak ada brand dipilih, bisa tampilkan semua produk atau kosongkan
+        $products = Product::with(['brand', 'category'])
+            ->latest()
+            ->paginate(20);
     }
 
-    $products = $query->paginate(20);
-
-    return view($this->themeFolder . '.category_by_slug', [
-        'slug' => $slug,
-        'category' => $category,
+    return view($this->themeFolder . '.categories_brand', [
+        'title' => 'Brands',
+        'categories' => $categories,
         'products' => $products,
     ]);
 }
 
-    public function checkout()
+
+    public function category($slug, Request $request)
     {
-        return view($this->themeFolder.'.checkout',[
-            'title'=>'Checkout'
+        $category = Categories::whereSlug($slug)->first();
+
+        if (!$category) {
+            return abort(404);
+        }
+
+        $query = Product::where('product_category_id', $category->id);
+
+        // Jika ada parameter brand di URL, filter juga berdasarkan brand
+        if ($request->has('brand')) {
+            $brandSlug = $request->query('brand');
+            $brand = Brand::where('slug', $brandSlug)->first();
+
+            if ($brand) {
+                $query->where('brand_id', $brand->id);
+            }
+        }
+
+        $products = $query->paginate(20);
+
+        return view($this->themeFolder . '.category_by_slug', [
+            'slug' => $slug,
+            'category' => $category,
+            'products' => $products,
         ]);
     }
+public function cart()
+{
+    $user = auth()->guard('customer')->user(); // Pastikan pakai guard 'customer' seperti sebelumnya
+
+    $cart = \App\Models\Cart::with(['items', 'items.itemable'])
+        ->where('user_id', $user->id)
+        ->first();
+
+    return view($this->themeFolder . '.cart', [
+        'title' => 'Keranjang Belanja',
+        'cart' => $cart, // <-- INI WAJIB ADA
+    ]);
+}
+
+
+
+
+    public function checkout()
+{
+    $cart = Cart::with(['items', 'items.itemable'])
+        ->where('user_id', auth()->guard('customer')->id())
+        ->first();
+
+    return view($this->themeFolder . '.checkout', [
+        'title' => 'Checkout',
+        'cart' => $cart
+    ]);
+}
+
 }

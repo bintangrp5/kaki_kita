@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('brand_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
-            $table->foreignId('categories_id')->constrained('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('brands_id');
+            $table->unsignedBigInteger('categories_id');
+
+            $table->foreign('brands_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreign('categories_id')->references('id')->on('product_categories')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

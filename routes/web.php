@@ -20,7 +20,7 @@ Route::get('categories_brand', [HomepageController::class, 'categories_brand']);
 Route::get('category/{slug}', [HomepageController::class, 'category']);
 Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
 Route::get('cart', [HomepageController::class, 'cart'])->name('cart.index');
-Route::get('checkout', [HomepageController::class, 'checkout'])->name('checkout.index');
+Route::get('checkout', [HomepageController::class, 'checkout'])->name('checkout');
 
 Route::patch('/products/{id}/toggle-status', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
 

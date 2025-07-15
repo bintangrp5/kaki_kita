@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->unsignedBigInteger('brand_id')->nullable()->after('product_category_id');
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
+        Schema::table('brand_categories', function (Blueprint $table) {
+            $table->unique(['brand_id', 'category_id']);
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('brand_categories', function (Blueprint $table) {
             //
         });
     }

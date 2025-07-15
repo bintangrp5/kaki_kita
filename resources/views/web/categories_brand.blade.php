@@ -1,55 +1,90 @@
 <x-layout>
-    <x-slot name="title"> Brands by Category</x-slot>
+    <x-slot name="title">Brands</x-slot>
 
     <div class="container py-3">
-        {{-- Header dan Filter --}}
+
+        {{-- Filter Kategori --}}
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <h3 class="mb-0 me-3" style="font-size: 1.5rem;">Brands</h3>
 
             <div class="d-flex align-items-center flex-wrap gap-3">
-                {{-- Filter --}}
                 <div id="category-filters" class="fw-bold d-flex gap-3">
-                    {{-- Tombol Semua --}}
                     <span class="filter-category text-primary active" data-category="all" style="cursor:pointer;">
                         Semua
                     </span>
-                    {{-- Tombol per kategori --}}
                     @foreach($categories as $category)
-                    <span class="filter-category text-dark" data-category="{{ $category->slug }}" style="cursor:pointer;">
-                        {{ $category->name }}
-                    </span>
+                        <span class="filter-category text-dark" data-category="{{ $category->slug }}" style="cursor:pointer;">
+                            {{ $category->name }}
+                        </span>
                     @endforeach
                 </div>
             </div>
         </div>
 
-        {{-- Konten Brand --}}
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3" id="brand-display">
-            @forelse($brands as $brand)
+        {{-- List Produk Brand --}}
+        <div class="row" id="product-list">
+            @forelse($products as $product)
                 @php
-                    $categorySlugs = $brand->categories->pluck('slug')->implode(' ');
+                    $brandSlug = $product->brand->slug ?? '';
+                    $categorySlug = $product->category->slug ?? '';
                 @endphp
-                <div class="col brand-item" data-category="{{ $categorySlugs }}">
-                    <div class="card text-center h-100 py-3 border-0 shadow-sm">
-                        <div class="mx-auto mb-2"
-                            style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;border-radius:50%;">
-                            <img src="{{ asset('storage/' . ($brand->image ?? 'images/default.png')) }}"
-                                alt="{{ $brand->name }}"
-                                style="width:36px;height:36px;object-fit:contain;">
-                        </div>
-                        <div class="card-body p-2 d-flex flex-column">
-                            <h6 class="card-title mb-1 text-dark">{{ $brand->name }}</h6>
-                            <p class="card-text text-muted small text-truncate">{{ $brand->description }}</p>
-
-                            {{-- ✅ Tombol diarahkan ke halaman brand --}}
-                            <a href="{{ url('/brand/' . $brand->slug) }}"
-                                class="btn btn-sm btn-outline-primary mt-auto">Lihat Brand</a>
+                <div class="col-md-3 mb-4 product-item"
+                     data-brand="{{ $brandSlug }}"
+                     data-category="{{ $categorySlug }}">
+                    <div class="card product-card h-100 shadow-sm">
+                        <img src="{{ $product->image_url ?: 'https://via.placeholder.com/350x200?text=No+Image' }}"
+                             class="card-img-top" alt="{{ $product->name }}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ $product->name }}</h5>
+                            <p class="card-text text-truncate">{{ $product->description }}</p>
+                            <div class="mt-auto">
+                                <span class="fw-bold text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                <a href="{{ url('/product/' . $product->slug) }}" class="btn btn-outline-primary btn-sm float-end">Lihat Detail</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             @empty
-                <p class="text-center w-100">Tidak ada brand tersedia</p>
+                <div class="col">
+                    <div class="alert alert-info">Belum ada produk tersedia.</div>
+                </div>
             @endforelse
         </div>
+
+        <div class="d-flex justify-content-center w-100 mt-4">
+            {{ $products->links('vendor.pagination.simple-bootstrap-5') }}
+        </div>
     </div>
+
+    {{-- JavaScript Filter --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterButtons = document.querySelectorAll('.filter-category');
+            const productItems = document.querySelectorAll('.product-item');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const selectedCategory = this.getAttribute('data-category');
+
+                    // Ubah class aktif
+                    filterButtons.forEach(b => {
+                        b.classList.remove('text-primary', 'active');
+                        b.classList.add('text-dark');
+                    });
+                    this.classList.remove('text-dark');
+                    this.classList.add('text-primary', 'active');
+
+                    // Filter produk berdasarkan kategori
+                    productItems.forEach(item => {
+                        const itemCategory = item.getAttribute('data-category');
+                        if (selectedCategory === 'all' || itemCategory === selectedCategory) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </x-layout>
