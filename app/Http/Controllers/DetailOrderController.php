@@ -48,6 +48,6 @@ class DetailOrderController extends Controller
     {
         $order = \App\Models\Order::with(['details.product'])->findOrFail($id);
 
-        return view('web.order_detail', compact('order'));
+        return view('dashboard.detail_order.show', compact('order'));
     }
 }
