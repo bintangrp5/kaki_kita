@@ -127,17 +127,17 @@ class ProductController extends Controller
 
         $slug = Str::slug($validated['slug'] ?? $validated['name']);
 
-$imagePath = $product->image_url;
+        $imagePath = $product->image_url;
 
-if ($request->hasFile('image')) {
-    $image = $request->file('image');
-    $imageName = time() . '.' . $image->getClientOriginalExtension();
-    $imagePath = $image->storeAs('uploads/products', $imageName, 'public');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('uploads/products', $imageName, 'public');
 
-    if ($product->image_url && file_exists(public_path($product->image_url))) {
-        unlink(public_path($product->image_url));
-    }
-}
+            if ($product->image_url && file_exists(public_path($product->image_url))) {
+                unlink(public_path($product->image_url));
+            }
+        }
 
         $product->update([
             'name' => $validated['name'],
@@ -155,33 +155,33 @@ if ($request->hasFile('image')) {
         return redirect()->route('products.index')->with('successMessage', 'Data Berhasil Diperbarui');
     }
 
-public function sync($id, Request $request)
-      {
-          $product = Product::findOrFail($id);
-  
-          $response = Http::post('https://api.phb-umkm.my.id/api/product/sync', [
-              'client_id' => 'client_35hql6ru493s',
-              'client_secret' => 'TvWbEBXJ56jIYsBJ8WqvGGOUk6z75LVFyqwyqOrp',
-              'seller_product_id' => (string) $product->id,
-              'name' => $product->name,
-              'description' => $product->description,
-              'price' => $product->price,
-              'stock' => $product->stock,
-              'sku' => $product->sku,
-              'image_url' => $product->image_url,
-              'weight' => $product->weight,
-              'is_active' => $request->is_active == 1 ? false : true,
-              'category_id' => (string) $product->category->hub_category_id,
-          ]);
-  
-          if ($response->successful() && isset($response['product_id'])) {
-              $product->hub_product_id = $request->is_active == 1 ? null : $response['product_id'];
-              $product->save();
-          }
-  
-          session()->flash('successMessage', 'Product Synced Successfully');
-          return redirect()->back();
-      }
+    public function sync($id, Request $request)
+    {
+        $product = Product::findOrFail($id);
+
+        $response = Http::post('https://api.phb-umkm.my.id/api/product/sync', [
+            'client_id' => 'client_35hql6ru493s',
+            'client_secret' => 'TvWbEBXJ56jIYsBJ8WqvGGOUk6z75LVFyqwyqOrp',
+            'seller_product_id' => (string) $product->id,
+            'name' => $product->name,
+            'description' => $product->description,
+            'price' => $product->price,
+            'stock' => $product->stock,
+            'sku' => $product->sku,
+            'image_url' => $product->image_url,
+            'weight' => $product->weight,
+            'is_active' => $request->is_active == 1 ? false : true,
+            'category_id' => (string) $product->category->hub_category_id,
+        ]);
+
+        if ($response->successful() && isset($response['product_id'])) {
+            $product->hub_product_id = $request->is_active == 1 ? null : $response['product_id'];
+            $product->save();
+        }
+
+        session()->flash('successMessage', 'Product Synced Successfully');
+        return redirect()->back();
+    }
 
 
     public function destroy(Product $product)
