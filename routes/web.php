@@ -74,7 +74,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
     Route::resource('categories', ProductCategoryController::class)->except(['show']); 
     Route::resource('brands', BrandController::class);
     // Route::get('detail_order/{id}/show', [DetailOrderController::class, 'show'])->name('admin.detail_order.show');    
-    Route::resource('detail_order', DetailOrderController::class)->names('admin.detail_order');
+    // Route::resource('detail_order', DetailOrderController::class)->names('admin.detail_order');
     // Route::get('detail_order/{id}/show', [DetailOrderController::class, 'show'])->name('detail_order.show');
 
     
