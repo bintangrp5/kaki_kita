@@ -58,14 +58,6 @@
                 </ul>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col-12">
-                <h4 class="mb-3">Deskripsi Produk</h4>
-                <div class="bg-light p-4 rounded shadow-sm">
-                    {!! nl2br(e($product->long_description ?? $product->description)) !!}
-                </div>
-            </div>
-        </div>
     </div>
     <div class="container my-5">
         <h3 class="mb-4">Produk Lainnya</h3>
