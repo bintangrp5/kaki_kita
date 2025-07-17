@@ -78,8 +78,9 @@ class BrandController extends Controller
     // Upload image jika ada
     if ($request->hasFile('image')) {
         $validated['image'] = $request->file('image')->store('brands', 'public');
+        $imagePath = $request->file('image')->store('products', 'public');
     }
-    $imagePath = $request->file('image')->store('products', 'public');
+    
 
 
     // Update kolom di tabel brands
