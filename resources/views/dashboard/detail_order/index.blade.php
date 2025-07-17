@@ -54,7 +54,7 @@
                             <flux:dropdown>
                                 <flux:button icon:trailing="chevron-down" variant="subtle">Actions</flux:button>
                                 <flux:menu>
-                                    <flux:menu.item icon="eye" href="{{ route('detail_order.show', $order->id) }}">
+                                    <flux:menu.item icon="eye" href="{{ route('detail_order.admin_show', $order->id) }}">
                                         Lihat Detail
                                     </flux:menu.item>
                                 </flux:menu>
