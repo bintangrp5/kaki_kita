@@ -20,7 +20,7 @@
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Tanggal</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Total</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Status</th>
-                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Aksi</th>
+                    <!-- <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Aksi</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +38,7 @@
                         <strong>Rp{{ number_format($order->total_amount, 0, ',', '.') }}</strong>
                     </td>
                     <td class="px-5 py-5 border-b text-sm">
-                        <form action="{{ route('detail_order.update', $order->id) }}" method="POST">
+                        <!-- <form action="{{ route('detail_order.update', $order->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <select name="status" class="form-select text-sm" onchange="this.form.submit()">
@@ -48,7 +48,7 @@
                                 </option>
                                 @endforeach
                             </select>
-                        </form>
+                        </form> -->
                     </td>
                     <td class="px-5 py-5 border-b text-sm">
                         <flux:dropdown>
