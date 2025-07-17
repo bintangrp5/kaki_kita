@@ -43,4 +43,11 @@ class DetailOrderController extends Controller
 
         return redirect()->route('detail_order.index')->with('success', 'Status pesanan diperbarui.');
     }
+
+    public function show($id)
+    {
+        $order = \App\Models\Order::with(['details.product'])->findOrFail($id);
+
+        return view('admin.order_detail', compact('order'));
+    }
 }

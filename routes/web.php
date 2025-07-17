@@ -71,12 +71,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
     Route::view('/', 'dashboard')->name('dashboard');
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', ProductController::class);
-
-    Route::resource('categories', ProductCategoryController::class)->except(['show']); // hanya ini yang dipakai
+    Route::resource('categories', ProductCategoryController::class)->except(['show']); 
 
     Route::resource('products', ProductController::class);
     Route::resource('brands', BrandController::class);
-    Route::resource('detail_order', DetailOrderController::class);
+    // Route::resource('detail_order', DetailOrderController::class);
+    Route::get('detail_order/{id}/show', [DetailOrderController::class, 'show'])->name('detail_order.show');
+
     
     Route::post('products/sync/{id}', [ProductController::class, 'sync'])->name('products.sync');
     Route::post('category/sync/{id}', [ProductCategoryController::class, 'sync'])->name('category.sync');
