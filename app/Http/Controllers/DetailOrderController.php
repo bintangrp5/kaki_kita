@@ -41,7 +41,7 @@ class DetailOrderController extends Controller
         $order->status = $request->status;
         $order->save();
 
-        return redirect()->route('detail_order.index')->with('success', 'Status pesanan diperbarui.');
+        return redirect()->route('dashboard.detail_order.index')->with('success', 'Status pesanan diperbarui.');
     }
 
     public function show($id)
