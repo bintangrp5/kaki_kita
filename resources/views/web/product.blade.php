@@ -15,7 +15,7 @@
                 <div class="bg-white shadow rounded p-3">
                     <img src="{{ $product->image_url ? Storage::url($product->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
                         alt="{{ $product->name }}"
-                        class="card-img-top">
+                        class="card-img-top object-fit-contain" style="height: 200px;">
                 </div>
             </div>
             <div class="col-md-6">

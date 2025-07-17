@@ -7,7 +7,7 @@
 
     {{-- Search & Add New Product --}}
     <div class="flex justify-between items-center mb-4">
-        <form action="{{ route('products.index') }}" method="get">
+        <form action="{{ route('products.index') }}" method="get" class="w-full max-w-md">
             @csrf
             <flux:input icon="magnifying-glass" name="q" value="{{ $q ?? '' }}" placeholder="Cari Produk" />
         </form>

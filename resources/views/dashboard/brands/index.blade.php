@@ -7,7 +7,7 @@
 
     <div class="flex justify-between items-center mb-4">
         <div>
-            <form action="{{ route('brands.index') }}" method="get">
+            <form action="{{ route('brands.index') }}" method="get" class="w-full max-w-md">
                 <flux:input icon="magnifying-glass" name="q" value="{{ request('q') }}" placeholder="Cari Brand" />
             </form>
         </div>
