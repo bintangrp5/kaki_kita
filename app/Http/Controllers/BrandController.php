@@ -41,8 +41,9 @@ class BrandController extends Controller
     $validated['slug'] = Str::slug($request->name);
 
     if ($request->hasFile('image')) {
-        $validated['image'] = $request->file('image')->store('brands', 'public');
-    }
+            $imagePath = $request->file('image')->store('uploads/brands', 'public');
+            $validated['image'] = $imagePath;
+        }
 
     $brand = Brand::create($validated);
 
@@ -78,6 +79,8 @@ class BrandController extends Controller
     if ($request->hasFile('image')) {
         $validated['image'] = $request->file('image')->store('brands', 'public');
     }
+    $imagePath = $request->file('image')->store('products', 'public');
+
 
     // Update kolom di tabel brands
     $brand->update($validated);

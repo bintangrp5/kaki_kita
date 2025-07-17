@@ -119,7 +119,7 @@
             <div class="col brand-item" data-category="{{ $categorySlugs }}" data-brand-slug="{{ $brand->slug }}">
 
                 <div class="card text-center h-100 py-3 border-0 shadow-sm">
-                    <div class="mx-auto mb-2"
+		    <div class="mx-auto mb-2"
                         style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;border-radius:50%;">
                         <img src="{{ asset('storage/' . ($brand->image ?? 'images/default.png')) }}" alt="{{ $brand->name }}"
                             style="width:36px;height:36px;object-fit:contain;">
@@ -158,24 +158,34 @@
         </div>
     </div>
 
-    <div class="container py-3">
-        <!-- Produk Terbaru -->
-        <h4>Produk Terbaru</h4>
-        <div class="row">
-            @forelse($newestProducts as $product)
-            <div class="col-md-3 mb-3">
-                <div class="card h-100">
-                    <img src="{{ $product->image_url ?? 'https://via.placeholder.com/350x200?text=No+Image' }}" class="card-img-top" alt="{{ $product->name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $product->name }}</h5>
-                        <span class="text-primary fw-bold">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+	<div class="container py-4">
+    <!-- Produk Terbaru -->
+    <h4 class="mb-4">Produk Terbaru</h4>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        @forelse($newestProducts as $product)
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="{{ $product->image_url ? Storage::url($product->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
+                        alt="{{ $product->name }}"
+                        class="card-img-top object-fit-contain" style="height: 200px;">
+
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title mb-2 text-truncate">{{ $product->name }}</h6>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-bold">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                            <a href="{{ route('product.show', $product->slug) }}" class="btn btn-outline-primary btn-sm">
+                                Lihat Detail
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            @empty
+        @empty
             <p>Tidak ada produk terbaru</p>
-            @endforelse
-        </div>
+        @endforelse
+    </div>
+</div>
+
 
         <!-- Produk Terlaris -->
         <!-- <h4 class="mt-5">Produk Terlaris</h4>
@@ -208,38 +218,45 @@
         </div>
     </div>
 
-    <div class="container py-3">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 style="font-size: 1.5rem;">Produk Kami</h3>
-            <a href="{{ URL::to('/products') }}" class="btn btn-outline-primary btn-sm">Lihat Semua Product</a>
-        </div>
-        <div class="row">
-            @forelse($products as $product)
-            <div class="col-md-3 mb-4">
-                <div class="card product-card h-100 shadow-sm">
-                    <img src="{{ $product->image_url ? $product->image_url :'https://via.placeholder.com/350x200?text=No+Image' }}" class="card-img-top" alt="{{$product->name }}">
+	<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="mb-0" style="font-size: 1.5rem;">Produk Kami</h3>
+        <a href="{{ url('/products') }}" class="btn btn-outline-primary btn-sm">Lihat Semua Produk</a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        @forelse($products as $product)
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="{{ $product->image_url ? Storage::url($product->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
+                        alt="{{ $product->name }}"
+                        class="card-img-top object-fit-contain" style="height: 200px;">
+
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ $product->name }}</h5>
-                        <p class="card-text text-truncate">{{ $product->description}}</p>
-                        <div class="mt-auto">
-                            <span class="fw-bold text-primary">Rp {{number_format($product->price, 0, ',', '.') }}</span>
+                        <h6 class="card-title text-truncate mb-2">{{ $product->name }}</h6>
+                        <p class="card-text text-muted small text-truncate">{{ $product->description }}</p>
+
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                             <a href="{{ route('product.show', $product->slug) }}"
-                                class="btn btn-outline-primary btn-sm float-end">Lihat Detail</a>
+                                class="btn btn-outline-primary btn-sm">Lihat Detail</a>
                         </div>
                     </div>
                 </div>
             </div>
-            @empty
-            <div class="col">
-                <div class="alert alert-info">Belum ada produk pada kategori
-                    ini.</div>
+        @empty
+            <div class="col-12">
+                <div class="alert alert-info text-center">Belum ada produk pada kategori ini.</div>
             </div>
-            @endforelse
-            <div class="d-flex justify-content-center w-100 mt-4">
-                {{ $products->links('vendor.pagination.bootstrap-5') }}
-            </div>
-        </div>
+        @endforelse
     </div>
+
+    @if ($products->hasPages())
+        <div class="d-flex justify-content-center mt-4">
+            {{ $products->links('vendor.pagination.bootstrap-5') }}
+        </div>
+    @endif
+</div>
 
 
     {{-- JavaScript untuk filter kategori --}}

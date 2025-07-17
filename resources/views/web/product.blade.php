@@ -13,7 +13,9 @@
         <div class="row g-5 align-items-start">
             <div class="col-md-6">
                 <div class="bg-white shadow rounded p-3">
-<img src="{{ $product->image ? asset('images/' . $product->image) : 'https://via.placeholder.com/350x200?text=No+Image' }}" class="card-img-top" alt="{{ $product->name }}">
+			<img src="{{ $product->image_url ? Storage::url($product->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
+                        alt="{{ $product->name }}"
+                        class="card-img-top">
                 </div>
                 <div class="mt-3">
                     <span class="badge bg-secondary">{{ $product->category->name ?? 'Kategori Tidak Diketahui' }}</span>
@@ -75,9 +77,9 @@ number_format($product->old_price, 0, ',', '.') }}</span>
             @foreach($relatedProducts as $relatedProduct)
             <div class="col">
                 <div class="card h-100 shadow-sm">
-                    <img src="{{ $relatedProduct->image_url ??
-'https://via.placeholder.com/350x200?text=No+Image' }}" class="card-img-top" alt="{{
-$relatedProduct->name }}">
+		    <img src="{{ $product->image_url ? Storage::url($product->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
+                        alt="{{ $product->name }}"
+                        class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">{{ $relatedProduct->name }}</h5>
                         <p class="card-text text-truncate">{{ $relatedProduct->description

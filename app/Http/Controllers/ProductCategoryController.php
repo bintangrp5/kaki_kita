@@ -90,6 +90,20 @@ class ProductCategoryController extends Controller
     public function show(string $id)
     {
         $category = Categories::find($id);
+
+	// Ambil semua brand terkait dengan kategori ini, bersama produk-produknya
+	$brands = $category->brands()->with('products')->get();
+
+    	// Gabungkan semua produk dari semua brand yang terkait
+    	$products = $brands->flatMap(function ($brand) {
+        	return $brand->products;
+    	});
+
+    	// Kirim ke view
+    	return view('web.categories', [
+        	'category' => $category,
+        	'products' => $products,
+    	]);
     }
 
     /**
@@ -155,8 +169,8 @@ class ProductCategoryController extends Controller
           $category = Categories::findOrFail($id);
           
           $response = Http::post('https://api.phb-umkm.my.id/api/product-category/sync', [
-              'client_id' => env('CLIENT_ID'),
-              'client_secret' => env('CLIENT_SECRET'),
+              'client_id' => 'client_35hql6ru493s',
+              'client_secret' => 'TvWbEBXJ56jIYsBJ8WqvGGOUk6z75LVFyqwyqOrp',
               'seller_product_category_id' => (string) $category->id,
               'name' => $category->name,
               'description' => $category->description,

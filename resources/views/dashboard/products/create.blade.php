@@ -15,10 +15,11 @@
         @csrf
 
         <flux:input label="Name" name="name" class="mb-3" placeholder="Product Name" value="{{ old('name') }}" />
-        <flux:select label="Category" name="category_slug" class="mb-3">
+<flux:select label="Category" name="category_slug" class="mb-3">
     <option value="">-- Pilih Kategori --</option>
     @foreach ($categories as $category)
-        <option value="{{ $category->slug }}" @selected(old('category_slug') == $category->slug)>
+        <option value="{{ $category->slug }}"
+            @selected(old('category_slug', $product->category_slug ?? '') == $category->slug)>
             {{ $category->name }}
         </option>
     @endforeach

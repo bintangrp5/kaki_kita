@@ -14,15 +14,17 @@
     <form action="{{ route('brands.store') }}" method="post" enctype="multipart/form-data">
         @csrf
 
-        <flux:input label="Name" name="name" class="mb-3" placeholder="Brand Name" />
-        <flux:select label="Category" name="category_id" class="mb-3">
-    <option value="">-- Pilih Kategori --</option>
-    @foreach ($categories as $category)
-        <option value="{{ $category->id }}"
-            @selected(old('category_id', isset($brand) ? optional($brand->categories->first())->id : null) == $category->id)            {{ $category->name }}
-        </option>
-    @endforeach
-</flux:select>
+	<flux:input label="Name" name="name" class="mb-3" placeholder="Product Name"/>
+
+	<flux:select label="Category" name="category_id" class="mb-3">
+    		<option value="">-- Pilih Kategori --</option>
+    		@foreach ($categories as $category)
+        		<option value="{{ $category->id }}"
+            			@selected(old('category_id', isset($brand) ? optional($brand->categories->first())->id : null) == $category->id)>
+            		{{ $category->name }}
+        	</option>
+    	@endforeach
+	</flux:select>
 
 
         <flux:input label="Slug" name="slug" class="mb-3" placeholder="auto-generated or custom slug" />

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandController;
@@ -23,7 +24,7 @@ Route::get('categories_brand', [HomepageController::class, 'categories_brand']);
 Route::get('category/{slug}', [HomepageController::class, 'category']);
 Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
 Route::get('cart', [HomepageController::class, 'cart'])->name('cart.index');
-
+Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
 
 
 Route::patch('/products/{id}/toggle-status', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
@@ -49,21 +50,11 @@ Route::group(['prefix' => 'customer'], function () {
 Route::group(['middleware' => ['is_customer_login']], function () {
     Route::controller(CartController::class)->group(function () {
         Route::post('cart/add', 'add')->name('cart.add');
-        Route::delete('cart/remove/{id}', 'remove')->name('cart.remove');
         Route::patch('cart/update/{id}', 'update')->name('cart.update');
+	Route::delete('cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     });
 });
 
-// Group untuk customer orders
-// Route::group(['middleware' => ['is_customer_login']], function () {
-//     Route::controller(OrderController::class)->prefix('orders')->name('orders.')->group(function () {
-//         Route::get('/', 'index')->name('index');       // orders.index
-//         Route::get('/{id}', 'show')->name('show');     // orders.show
-//     });
-// });
-// Route::get('/order', [OrderController::class, 'index'])
-//     ->middleware(['auth'])
-//     ->name('order');
 
 Route::middleware('auth:customer')->group(function () {
     Route::get('checkout', [HomepageController::class, 'checkout'])->name('checkout');
@@ -78,6 +69,7 @@ Route::middleware('auth:customer')->group(function () {
 // Group admin & dahboard
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], function () {
     Route::view('/', 'dashboard')->name('dashboard');
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('categories', ProductCategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('brands', BrandController::class);

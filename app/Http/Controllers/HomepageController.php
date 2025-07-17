@@ -121,11 +121,14 @@ class HomepageController extends Controller
         }
 
         $products = $query->paginate(20);
+	
+	$categories = Categories::all();
 
         return view($this->themeFolder . '.category_by_slug', [
             'slug' => $slug,
             'category' => $category,
             'products' => $products,
+	    'categories' => $categories,
         ]);
     }
 public function cart()

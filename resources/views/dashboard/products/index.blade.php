@@ -28,7 +28,7 @@
         <table class="min-w-full leading-normal">
             <thead>
                 <tr>
-                    @foreach(['ID', 'Image', 'Name', 'Slug', 'Brand', 'SKU', 'Harga (Rp)', 'Stock', 'Status', 'Created At','On/Off', 'Actions'] as $heading)
+                    @foreach(['ID', 'Image', 'Name', 'Slug', 'Kategori', 'Brand', 'SKU', 'Harga (Rp)', 'Stock', 'Status', 'Created At','On/Off', 'Actions'] as $heading)
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         {{ $heading }}
                     </th>
@@ -39,52 +39,41 @@
                 @foreach($products as $key => $product)
                 <tr>
                     {{-- ID --}}
-                    <td class="px-5 py-5 border-b text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">{{ $key + 1 }}</p>
-                    </td>
+                    <td class="px-5 py-5 border-b text-sm">{{ $key + 1 }}</td>
 
                     {{-- Image --}}
                     <td class="px-5 py-5 border-b text-sm">
                         @if($product->image_url)
-                        <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="h-10 w-10 rounded-full">
+                        <img src="{{ Storage::url($product->image_url) }}" alt="{{ $product->name }}" 
+				class="h-10 w-10 rounded object-cover">
                         @else
-                        <div class="h-10 w-10 flex items-center justify-center rounded">
+                        <div class="h-10 w-10 rounded object-cover">
                             <span class="text-gray-500 text-sm">N/A</span>
                         </div>
                         @endif
                     </td>
 
                     {{-- Name --}}
-                    <td class="px-5 py-5 border-b text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">{{ $product->name }}</p>
-                    </td>
+                    <td class="px-5 py-5 border-b text-sm">{{ $product->name }}</td>
 
                     {{-- Slug --}}
-                    <td class="px-5 py-5 border-b text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">{{ $product->slug }}</p>
-                    </td>
+                    <td class="px-5 py-5 border-b text-sm">{{ $product->slug }}</td>
+
+		    {{-- Kategori --}}
+                    <td class="px-5 py-5 border-b text-sm">{{ $product->category->name ?? '-' }}</td>
+
 
                     {{--Brand--}}
-                    <td class="px-5 py-5 border-b text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">{{ $product->brand->name ?? '-' }}</p>
-                    </td>
+                    <td class="px-5 py-5 border-b text-sm">{{ $product->brand->name ?? '-' }}</td>
 
                     {{-- SKU --}}
-                    <td class="px-5 py-5 border-b text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">{{ $product->sku }}</p>
-                    </td>
+                    <td class="px-5 py-5 border-b text-sm">{{ $product->sku }}</td>
 
                     {{-- Price --}}
-                    <td class="px-5 py-5 border-b text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">
-                            Rp{{ number_format($product->price, 2, ',', '.') }}
-                        </p>
-                    </td>
+                    <td class="px-5 py-5 border-b text-sm">Rp{{ number_format($product->price, 2, ',', '.') }}</td>
 
                     {{-- Stock --}}
-                    <td class="px-5 py-5 border-b text-sm">
-                        <p class="text-gray-900 whitespace-no-wrap">{{ $product->stock }}</p>
-                    </td>
+                    <td class="px-5 py-5 border-b text-sm">{{ $product->stock }}</td>
 
                     {{-- Status & Toggle --}}
                     <td class="px-5 py-5 border-b text-sm">

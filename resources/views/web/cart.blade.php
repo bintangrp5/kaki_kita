@@ -22,9 +22,9 @@
                         @foreach($cart->items as $item)
                         @if($item->itemable)
                         <div class="cart-item d-flex align-items-center mb-3 border-bottom pb-3">
-                            <img src="{{ $item->itemable->image_url ?? 'https://via.placeholder.com/80?text=Product' }}"
-                                class="cart-img me-3 rounded"
-                                alt="{{ $item->itemable->name }}">
+			    <img src="{{ $item->itemable->image_url ? Storage::url($item->itemable->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
+     alt="{{ $item->itemable->name }}"
+     class="card-img-top object-fit-contain" style="height: 200px;">
 
                             <div class="flex-grow-1">
                                 <h5 class="cart-item-name mb-1">{{ $item->itemable->name }}</h5>
@@ -51,15 +51,13 @@
                                 <span class="cart-item-subtotal mb-0 me-3 fw-semibold">
                                     Rp.{{ number_format($item->itemable->price * $item->quantity, 0, ',', '.') }}
                                 </span>
+				
+				<form action="{{ route('cart.remove', $item->itemable->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus item ini?')">
+				    @csrf
+    				    @method('DELETE')
+    					<button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+				</form>
 
-                                <form action="{{ route('cart.remove', $item->id) }}" method="POST"
-                                    onsubmit="return confirm('Hapus item ini dari keranjang?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
-                                        <i class="bi bi-trash"></i> Hapus
-                                    </button>
-                                </form>
                             </div>
                         </div>
                         @endif

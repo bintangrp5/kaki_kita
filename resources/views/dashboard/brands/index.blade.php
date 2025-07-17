@@ -42,28 +42,28 @@
             <tbody>
                 @forelse ($brands as $key => $brand)
                 <tr>
-                    <td class="px-5 py-5 border-b text-sm">
+			<td class="px-5 py-5 border-b text-sm">
                         {{ $key + 1 }}
                     </td>
                     <td class="px-5 py-5 border-b text-sm">
-                        @if($brand->image)
-                        <img src="{{ asset($brand->image_url) }}" alt="{{ $brand->name }}" class="h-10 w-10 rounded-full">
+				@if($brand->image)
+                        <img src="{{ Storage::url($brand->image) }}" alt="{{ $brand->name }}" class="h-10 w-10 rounded object-cover">
                         @else
-                        <div class="h-10 w-10 flex items-center justify-center rounded">
+                        <div class="h-10 w-10 flex rounded object-cover">
                             <span class="text-gray-500 text-sm">N/A</span>
                         </div>
                         @endif
                     </td>
                     <td class="px-5 py-5 border-b text-sm">{{ $brand->name }}</td>
                     <td class="px-5 py-5 border-b text-sm">
-    {{ $brand->categories->first()->name ?? '-' }}
-</td>
+                        {{ $brand->categories->first()->name ?? '-' }}
+                    </td>
 
 
                     <td class="px-5 py-5 border-b text-sm">{{ $brand->slug }}</td>
                     <td class="px-5 py-5 border-b text-sm">{{ $brand->description ?? '-' }}</td>
                     <td class="px-5 py-5 border-b text-sm">
-                        <span class="badge bg-{{ $brand->is_active ? 'green' : 'gray' }}">
+                        <span class="inline-block min-w-[80px] text-center px-3 py-1 rounded-full text-sm font-medium shadow-sm {{ $brand->is_active ? 'bg-green-200 text-green-900' : 'bg-gray-200 text-gray-800' }}">
                             {{ $brand->is_active ? 'Active' : 'Inactive' }}
                         </span>
                     </td>
@@ -93,9 +93,6 @@
             </tbody>
         </table>
 
-        @foreach ($brands as $brand)
-        <p>{{ $brand->name }}</p>
-        @endforeach
 
         <div class="mt-3">
             {{ $brands->links() }} {{-- ✅ Aman sekarang --}}

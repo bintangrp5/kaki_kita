@@ -1,0 +1,88 @@
+<x-layouts.app :title="'Dashboard'">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        {{-- Total Products --}}
+        <div class="bg-gray-900 p-6 rounded-xl shadow">
+            <div class="text-gray-400 text-sm mb-2">Total Products</div>
+            <div class="text-3xl font-bold text-gray-400">{{ $totalProducts }}</div>
+            <div class="text-sm text-pink-400 mt-1">Active Products: {{ $activeProducts }}</div>
+        </div>
+
+        {{-- Total Categories --}}
+        <div class="bg-gray-900 p-6 rounded-xl shadow">
+            <div class="text-gray-400 text-sm mb-2">Total Categories</div>
+            <div class="text-3xl font-bold text-gray-400">{{ $totalCategories }}</div>
+            <div class="text-sm text-pink-400 mt-1">With Products: {{ $categoriesWithProducts }}</div>
+        </div>
+
+        {{-- Total Brands (optional) --}}
+        <div class="bg-gray-900 p-6 rounded-xl shadow">
+            <div class="text-gray-400 text-sm mb-2">Total Brands</div>
+            <div class="text-3xl font-bold text-gray-400">{{ $totalBrands }}</div>
+            <div class="text-sm text-pink-400 mt-1">With Products: {{ $brandsWithProducts }}</div>
+        </div>
+
+        {{-- Total Orders --}}
+        <div class="bg-gray-900 p-6 rounded-xl shadow mb-6">
+            <div class="text-gray-400 text-sm mb-2">Total Orders</div>
+            <div class="text-3xl font-bold text-gray-400">{{ $totalOrders }}</div>
+            <div class="text-sm text-pink-400 mt-1">
+                Pending: {{ $pendingOrders }} |
+                Processing: {{ $processingOrders }}
+            </div>
+        </div>
+    </div>
+
+	<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+   	{{-- Recent Orders --}}
+   	 <div class="p-6 rounded-xl shadow">
+        	<div class="flex justify-between items-center mb-4">
+            		<div class="text-gray-900 dark:text-white font-semibold text-lg">Recent Orders</div>
+            		<a href="{{ route('orders.index') }}" class="text-pink-600 dark:text-pink-400 text-sm">View All</a>
+        	</div>
+        <div class="space-y-3">
+            @forelse ($recentOrders as $order)
+                <div>
+                    <div class="text-gray-900 dark:text-white font-semibold">
+                        #{{ $order->id }} - {{ $order->customer_name }}
+                    </div>
+                    <div class="text-gray-600 dark:text-gray-400 text-sm">
+                        {{ $order->created_at->diffForHumans() }}
+                    </div>
+                    <div class="text-green-600 dark:text-green-400 text-sm font-semibold">
+                        {{ ucfirst($order->status) }}
+                    </div>
+                </div>
+            @empty
+                <div class="text-gray-600 dark:text-gray-400">No recent orders.</div>
+            @endforelse
+        </div>
+    </div>
+</div>
+
+	{{-- Recent Products --}}
+	<div class="p-6 rounded-xl shadow">
+    	<div class="flex justify-between items-center mb-4">
+        	<div class="text-gray-900 dark:text-white font-semibold text-lg">Recent Products</div>
+        	<a href="{{ route('products.index') }}" class="text-pink-600 dark:text-pink-400 text-sm">View All</a>
+    	</div>
+    	<div class="divide-y divide-gray-200 dark:divide-gray-700">
+        	@foreach ($recentProducts as $product)
+            		<div class="flex items-center py-3">
+				<img src="{{ Storage::url($product->image_url) }}" alt="{{ $product->name }}"
+                                class="h-10 w-10 rounded object-cover">
+                	<div class="flex-1 ml-4">
+                    		<div class="text-gray-900 dark:text-white font-medium">{{ $product->name }}</div>
+                    	<div class="text-gray-600 dark:text-gray-400 text-sm">{{ $product->category->name ?? '-' }}</div>
+                	</div>
+                	<div class="text-right text-sm">
+                    		<div class="text-gray-900 dark:text-white font-semibold">
+                        		Rp {{ number_format($product->price, 0, ',', '.') }}
+                    				</div>
+            				        <div class="text-gray-600 dark:text-gray-400">Stock: {{ $product->stock }}</div>
+       	        	 		</div>
+        	    		</div>
+        		@endforeach
+    		</div>
+	</div>
+    </div>
+</x-layouts.app>
