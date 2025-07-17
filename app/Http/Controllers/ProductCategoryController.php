@@ -91,19 +91,19 @@ class ProductCategoryController extends Controller
     {
         $category = Categories::find($id);
 
-	// Ambil semua brand terkait dengan kategori ini, bersama produk-produknya
-	$brands = $category->brands()->with('products')->get();
+        // Ambil semua brand terkait dengan kategori ini, bersama produk-produknya
+        $brands = $category->brands()->with('products')->get();
 
-    	// Gabungkan semua produk dari semua brand yang terkait
-    	$products = $brands->flatMap(function ($brand) {
-        	return $brand->products;
-    	});
+        // Gabungkan semua produk dari semua brand yang terkait
+        $products = $brands->flatMap(function ($brand) {
+            return $brand->products;
+        });
 
-    	// Kirim ke view
-    	return view('web.categories', [
-        	'category' => $category,
-        	'products' => $products,
-    	]);
+        // Kirim ke view
+        return view('web.categories', [
+            'category' => $category,
+            'products' => $products,
+        ]);
     }
 
     /**
@@ -149,13 +149,8 @@ class ProductCategoryController extends Controller
         $category->description = $request->description;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '_' .
-                $image->getClientOriginalName();
-            $imagePath = $image->storeAs(
-                'uploads/categories',
-                $imageName,
-                'public'
-            );
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = $image->storeAs('uploads/categories', $imageName, 'public');
             $category->image = $imagePath;
         }
         $category->save();
@@ -164,27 +159,27 @@ class ProductCategoryController extends Controller
     }
 
 
-     public function sync($id, Request $request)
-      {
-          $category = Categories::findOrFail($id);
-          
-          $response = Http::post('https://api.phb-umkm.my.id/api/product-category/sync', [
-              'client_id' => 'client_35hql6ru493s',
-              'client_secret' => 'TvWbEBXJ56jIYsBJ8WqvGGOUk6z75LVFyqwyqOrp',
-              'seller_product_category_id' => (string) $category->id,
-              'name' => $category->name,
-              'description' => $category->description,
-              'is_active' => $request->is_active == 1 ? false : true,
-          ]);
-  
-          if ($response->successful() && isset($response['product_category_id'])) {
-              $category->hub_category_id = $request->is_active == 1 ? null : $response['product_category_id'];
-              $category->save();
-          }
-  
-          session()->flash('successMessage', 'Category Synced Successfully');
-          return redirect()->back();
-      }
+    public function sync($id, Request $request)
+    {
+        $category = Categories::findOrFail($id);
+
+        $response = Http::post('https://api.phb-umkm.my.id/api/product-category/sync', [
+            'client_id' => 'client_35hql6ru493s',
+            'client_secret' => 'TvWbEBXJ56jIYsBJ8WqvGGOUk6z75LVFyqwyqOrp',
+            'seller_product_category_id' => (string) $category->id,
+            'name' => $category->name,
+            'description' => $category->description,
+            'is_active' => $request->is_active == 1 ? false : true,
+        ]);
+
+        if ($response->successful() && isset($response['product_category_id'])) {
+            $category->hub_category_id = $request->is_active == 1 ? null : $response['product_category_id'];
+            $category->save();
+        }
+
+        session()->flash('successMessage', 'Category Synced Successfully');
+        return redirect()->back();
+    }
 
     /**
      * Remove the specified resource from storage.

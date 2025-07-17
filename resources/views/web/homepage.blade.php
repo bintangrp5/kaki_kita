@@ -145,13 +145,13 @@
         <div class="row mt-4">
             <div class="col-md-6 mb-3">
                 <a href="#" class="d-block w-100 h-100">
-                    <img src="{{ asset('images/home-banner1.png') }}" alt="Penawaran Spesial Nike Forum Low"
+                    <img src="{{ asset('images/banner kakikita (6).png') }}" alt="Penawaran Spesial Nike Forum Low"
                         class="img-fluid rounded shadow-sm w-100 h-100 object-fit-cover">
                 </a>
             </div>
             <div class="col-md-6 mb-3">
                 <a href="#" class="d-block w-100 h-100">
-                    <img src="{{ asset('images/SALE.png') }}" alt="Koleksi Terbaru Sepatu Converse"
+                    <img src="{{ asset('images/home-banner1.png') }}" alt="Koleksi Terbaru Sepatu Converse"
                         class="img-fluid rounded shadow-sm w-100 h-100 object-fit-cover">
                 </a>
             </div>
