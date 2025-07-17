@@ -4,7 +4,7 @@
     <h2 class="mb-4">{{ $category->name }}</h2>
 
     @if($products->isEmpty())
-        <p>Tidak ada produk dalam kategori ini.</p>
+        <p>Belum produk dalam kategori ini.</p>
     @else
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach($products as $product)
