@@ -40,7 +40,9 @@
                             <p class="card-text text-truncate">{{ $product->description }}</p>
                             <div class="mt-auto">
                                 <span class="fw-bold text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                <a href="#" class="btn btn-outline-primary btn-sm float-end">Lihat Detail</a>
+                                <a href="{{ route('product.show', $product->slug) }}" class="btn btn-outline-primary btn-sm">
+                                Lihat Detail
+                                </a>
                             </div>
                         </div>
                     </div>
