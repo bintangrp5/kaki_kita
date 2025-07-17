@@ -8,21 +8,21 @@
                 <!-- Slide 1 -->
                 <div class="banner-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         opacity: 1; z-index: 2; transition: opacity 1s ease-in-out;">
-                    <img src="{{ asset('images/banner1 (1).png') }}" alt="Penawaran Spesial 1"
+                    <img src="{{ asset('images/banner kakikita (1).jpeg') }}" alt="Penawaran Spesial 1"
                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
 
                 <!-- Slide 2 -->
                 <div class="banner-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         opacity: 0; z-index: 1; transition: opacity 1s ease-in-out;">
-                    <img src="{{ asset('images/banner1 (4).png') }}" alt="Penawaran Spesial 2"
+                    <img src="{{ asset('images/banner kakikita (2).jpeg') }}" alt="Penawaran Spesial 2"
                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
 
                 <!-- Slide 3 -->
                 <div class="banner-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         opacity: 0; z-index: 1; transition: opacity 1s ease-in-out;">
-                    <img src="{{ asset('images/banner1 (5).png') }}" alt="Penawaran Spesial 3"
+                    <img src="{{ asset('images/banner kakikita (3).jpeg') }}" alt="Penawaran Spesial 3"
                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
                 </div>
 
