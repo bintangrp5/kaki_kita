@@ -75,7 +75,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
 
     Route::resource('products', ProductController::class);
     Route::resource('brands', BrandController::class);
-    // Route::resource('detail_order', DetailOrderController::class);
+    Route::resource('detail_order', DetailOrderController::class);
     Route::get('detail_order/{id}/show', [DetailOrderController::class, 'show'])->name('detail_order.show');
 
     
