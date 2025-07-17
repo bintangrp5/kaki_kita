@@ -38,7 +38,7 @@
                         <strong>Rp{{ number_format($order->total_amount, 0, ',', '.') }}</strong>
                     </td>
                     <td class="px-5 py-5 border-b text-sm">
-                        <!-- <form action="{{ route('detail_order.update', $order->id) }}" method="POST">
+                        <form action="{{ route('detail_order.update', $order->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <select name="status" class="form-select text-sm" onchange="this.form.submit()">
@@ -48,14 +48,14 @@
                                 </option>
                                 @endforeach
                             </select>
-                        </form> -->
+                        </form>
                     </td>
                     <td class="px-5 py-5 border-b text-sm">
                         <flux:dropdown>
-                            <flux:button icon:trailing="chevron-down" variant="subtle">Actions</flux:button>
+                            <!-- <flux:button icon:trailing="chevron-down" variant="subtle">Actions</flux:button>
                             <flux:menu>
 
-                            </flux:menu>
+                            </flux:menu> -->
                         </flux:dropdown>
                     </td>
                 </tr>
