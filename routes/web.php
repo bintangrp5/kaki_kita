@@ -24,7 +24,7 @@ Route::get('categories_brand', [HomepageController::class, 'categories_brand']);
 Route::get('category/{slug}', [HomepageController::class, 'category']);
 Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
 Route::get('cart', [HomepageController::class, 'cart'])->name('cart.index');
-Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
+Route::get('/categories/{id}', [ProductCategoryController::class, 'show'])->name('categories.show');
 
 
 Route::patch('/products/{id}/toggle-status', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');
@@ -51,7 +51,7 @@ Route::group(['middleware' => ['is_customer_login']], function () {
     Route::controller(CartController::class)->group(function () {
         Route::post('cart/add', 'add')->name('cart.add');
         Route::patch('cart/update/{id}', 'update')->name('cart.update');
-	Route::delete('cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+	    Route::delete('cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     });
 });
 
@@ -70,14 +70,17 @@ Route::middleware('auth:customer')->group(function () {
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], function () {
     Route::view('/', 'dashboard')->name('dashboard');
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
-    Route::resource('categories', ProductCategoryController::class);
+
+    Route::resource('categories', ProductCategoryController::class)->except(['show']); // hanya ini yang dipakai
+
     Route::resource('products', ProductController::class);
     Route::resource('brands', BrandController::class);
     Route::resource('detail_order', DetailOrderController::class);
+    
     Route::post('products/sync/{id}', [ProductController::class, 'sync'])->name('products.sync');
     Route::post('category/sync/{id}', [ProductCategoryController::class, 'sync'])->name('category.sync');
-
 });
+
 
 
 Route::middleware(['auth'])->group(function () {

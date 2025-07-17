@@ -13,7 +13,7 @@
                         <a class="nav-link active text-white" aria-current="page"
                             href="/">Beranda</a>
                     </li>
-		    @foreach($navCategories as $category)
+		            @foreach($navCategories as $category)
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('categories.show', $category->id) }}">
                                 {{ $category->name }}
