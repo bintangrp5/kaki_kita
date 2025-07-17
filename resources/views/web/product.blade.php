@@ -75,7 +75,8 @@
                 <div class="card h-100 shadow-sm">
                     <img src="{{ $relatedProduct->image_url ? Storage::url($relatedProduct->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
                         alt="{{ $relatedProduct->name }}"
-                        class="card-img-top">
+                        class="card-img-top object-fit-contain"
+                        style="height: 200px;">
                     <div class="card-body">
                         <h5 class="card-title">{{ $relatedProduct->name }}</h5>
                         <p class="card-text text-truncate">{{ $relatedProduct->description}}</p>

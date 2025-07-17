@@ -119,7 +119,7 @@
             <div class="col brand-item" data-category="{{ $categorySlugs }}" data-brand-slug="{{ $brand->slug }}">
 
                 <div class="card text-center h-100 py-3 border-0 shadow-sm">
-		    <div class="mx-auto mb-2"
+                    <div class="mx-auto mb-2"
                         style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;border-radius:50%;">
                         <img src="{{ asset('storage/' . ($brand->image ?? 'images/default.png')) }}" alt="{{ $brand->name }}"
                             style="width:36px;height:36px;object-fit:contain;">
@@ -158,11 +158,11 @@
         </div>
     </div>
 
-	<div class="container py-4">
-    <!-- Produk Terbaru -->
-    <h4 class="mb-4">Produk Terbaru</h4>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        @forelse($newestProducts as $product)
+    <div class="container py-4">
+        <!-- Produk Terbaru -->
+        <h4 class="mb-4">Produk Terbaru</h4>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            @forelse($newestProducts as $product)
             <div class="col">
                 <div class="card h-100 shadow-sm border-0">
                     <img src="{{ $product->image_url ? Storage::url($product->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
@@ -180,15 +180,15 @@
                     </div>
                 </div>
             </div>
-        @empty
+            @empty
             <p>Tidak ada produk terbaru</p>
-        @endforelse
+            @endforelse
+        </div>
     </div>
-</div>
 
 
-        <!-- Produk Terlaris -->
-        <!-- <h4 class="mt-5">Produk Terlaris</h4>
+    <!-- Produk Terlaris -->
+    <!-- <h4 class="mt-5">Produk Terlaris</h4>
         <div class="row">
             @forelse($bestSellerProducts as $product)
             <div class="col-md-3 mb-3">
@@ -218,14 +218,14 @@
         </div>
     </div>
 
-	<div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="mb-0" style="font-size: 1.5rem;">Produk Kami</h3>
-        <a href="{{ url('/products') }}" class="btn btn-outline-primary btn-sm">Lihat Semua Produk</a>
-    </div>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0" style="font-size: 1.5rem;">Produk Kami</h3>
+            <a href="{{ url('/products') }}" class="btn btn-outline-primary btn-sm">Lihat Semua Produk</a>
+        </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        @forelse($products as $product)
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            @forelse($products as $product)
             <div class="col">
                 <div class="card h-100 shadow-sm border-0">
                     <img src="{{ $product->image_url ? Storage::url($product->image_url) : 'https://via.placeholder.com/350x200?text=No+Image' }}"
@@ -244,72 +244,72 @@
                     </div>
                 </div>
             </div>
-        @empty
+            @empty
             <div class="col-12">
                 <div class="alert alert-info text-center">Belum ada produk pada kategori ini.</div>
             </div>
-        @endforelse
-    </div>
+            @endforelse
+        </div>
 
-    @if ($products->hasPages())
+        @if ($products->hasPages())
         <div class="d-flex justify-content-center mt-4">
             {{ $products->links('vendor.pagination.bootstrap-5') }}
         </div>
-    @endif
-</div>
+        @endif
+    </div>
 
 
     {{-- JavaScript untuk filter kategori --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('.filter-category');
-    const brandItems = document.querySelectorAll('.brand-item');
+            const filterButtons = document.querySelectorAll('.filter-category');
+            const brandItems = document.querySelectorAll('.brand-item');
 
-    // ✅ SET DEFAULT LINK SAAT FILTER = "Semua"
-    brandItems.forEach(item => {
-        const lihatBrandBtn = item.querySelector('.btn-lihat-brand');
-        const brandSlug = item.getAttribute('data-brand-slug');
-        if (lihatBrandBtn && brandSlug) {
-            lihatBrandBtn.setAttribute('href', '/categories_brand?brand=' + brandSlug);
-        }
-    });
-
-    // ⬇️ Ini tetap seperti sebelumnya
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const category = this.getAttribute('data-category');
-
-            // Set active class
-            filterButtons.forEach(b => {
-                b.classList.remove('text-primary', 'active');
-                b.classList.add('text-dark');
-            });
-            this.classList.remove('text-dark');
-            this.classList.add('text-primary', 'active');
-
-            // Update brand tampil + tombol
+            // ✅ SET DEFAULT LINK SAAT FILTER = "Semua"
             brandItems.forEach(item => {
-                const itemCategory = item.getAttribute('data-category');
                 const lihatBrandBtn = item.querySelector('.btn-lihat-brand');
                 const brandSlug = item.getAttribute('data-brand-slug');
-
-                if (category === 'all' || itemCategory.includes(category)) {
-                    item.style.display = 'block';
-
-                    if (lihatBrandBtn) {
-                        if (category === 'all') {
-                            lihatBrandBtn.setAttribute('href', '/categories_brand?brand=' + brandSlug);
-                        } else {
-                            lihatBrandBtn.setAttribute('href', '/category/' + category + '?brand=' + brandSlug);
-                        }
-                    }
-                } else {
-                    item.style.display = 'none';
+                if (lihatBrandBtn && brandSlug) {
+                    lihatBrandBtn.setAttribute('href', '/categories_brand?brand=' + brandSlug);
                 }
             });
+
+            // ⬇️ Ini tetap seperti sebelumnya
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+
+                    // Set active class
+                    filterButtons.forEach(b => {
+                        b.classList.remove('text-primary', 'active');
+                        b.classList.add('text-dark');
+                    });
+                    this.classList.remove('text-dark');
+                    this.classList.add('text-primary', 'active');
+
+                    // Update brand tampil + tombol
+                    brandItems.forEach(item => {
+                        const itemCategory = item.getAttribute('data-category');
+                        const lihatBrandBtn = item.querySelector('.btn-lihat-brand');
+                        const brandSlug = item.getAttribute('data-brand-slug');
+
+                        if (category === 'all' || itemCategory.includes(category)) {
+                            item.style.display = 'block';
+
+                            if (lihatBrandBtn) {
+                                if (category === 'all') {
+                                    lihatBrandBtn.setAttribute('href', '/categories_brand?brand=' + brandSlug);
+                                } else {
+                                    lihatBrandBtn.setAttribute('href', '/category/' + category + '?brand=' + brandSlug);
+                                }
+                            }
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
         });
-    });
-});
 
 
 
