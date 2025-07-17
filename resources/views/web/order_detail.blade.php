@@ -10,7 +10,7 @@
             <div class="card-body">
                 <p><strong>Tanggal Pesan:</strong> {{ $order->created_at->format('d M Y') }}</p>
                 <p><strong>Status:</strong> {{ ucfirst($order->status) }}</p>
-                <p><strong>Total:</strong> Rp {{ number_format($order->total_price, 0, ',', '.') }}</p>
+                <p><strong>Total:</strong> Rp {{ number_format($order->total_amount, 0, ',', '.') }}</p>
             </div>
         </div>
 
@@ -33,8 +33,8 @@
                         <tr>
                             <td>{{ $detail->product->name ?? '-' }}</td>
                             <td>{{ $detail->quantity }}</td>
-                            <td>Rp {{ number_format($detail->price, 0, ',', '.') }}</td>
-                            <td>Rp {{ number_format($detail->price * $detail->quantity, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($detail->unit_price, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</td>
                         </tr>
                         @endforeach
                     </tbody>

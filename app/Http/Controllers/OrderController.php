@@ -18,8 +18,18 @@ class OrderController extends Controller
     public function show($id)
     {
         $user = auth()->guard('customer')->user();
-        $order = Order::where('customer_id', $user->id)->findOrFail($id);
+        $order = Order::with('details.product') // eager load produk
+            ->where('customer_id', $user->id)
+            ->findOrFail($id);
 
         return view('web.order_detail', compact('order'));
     }
+
+    // public function show($id)
+    // {
+    //     $user = auth()->guard('customer')->user();
+    //     $order = Order::where('customer_id', $user->id)->findOrFail($id);
+
+    //     return view('web.order_detail', compact('order'));
+    // }
 }

@@ -11,15 +11,15 @@ use Binafy\LaravelCart\Models\Cart;
 class CheckoutController extends Controller
 {
     public function index()
-{
-    $user = auth()->guard('customer')->user();
-    $cart = Cart::with(['items', 'items.itemable'])->where('user_id', $user->id)->first();
+    {
+        $user = auth()->guard('customer')->user();
+        $cart = Cart::with(['items', 'items.itemable'])->where('user_id', $user->id)->first();
 
-    return view('web.checkout', [ // ubah di sini
-        'title' => 'Checkout',
-        'cart' => $cart,
-    ]);
-}
+        return view('web.checkout', [ // ubah di sini
+            'title' => 'Checkout',
+            'cart' => $cart,
+        ]);
+    }
 
 
 

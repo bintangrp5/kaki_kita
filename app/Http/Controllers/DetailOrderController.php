@@ -22,8 +22,10 @@ class DetailOrderController extends Controller
      */
     public function edit($id)
     {
-        $order = Order::with('customer')->findOrFail($id);
+        $order = Order::with(['customer', 'details.product'])->findOrFail($id);
         return view('dashboard.detail_order.edit', compact('order'));
+        // $order = Order::with('customer')->findOrFail($id);
+        // return view('dashboard.detail_order.edit', compact('order'));
     }
 
     /**
