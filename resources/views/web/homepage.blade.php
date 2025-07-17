@@ -48,7 +48,7 @@
                     <div class="mb-2">
                         <i class="bi bi-truck" style="font-size: 1.5rem;"></i>
                     </div>
-                    <h6 class="mb-1 fw-bold">PENGIRIMAN CEPAT</h6>
+                    <h6 class="mb-1 fw-bold">PENGIRIMAN CEPAT BANGET</h6>
                     <p class="mb-0 small">Kurir pengiriman yang handal</p>
                 </div>
             </div>
