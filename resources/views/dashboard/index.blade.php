@@ -3,28 +3,28 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <!-- Total Products -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="text-lg font-semibold">Total ProductsNYA iniiiiiii</h3>
+            <h3 class="text-lg font-semibold">Total Produk</h3>
             <p class="text-2xl">{{ $totalProducts }}</p>
             <span class="text-sm text-gray-500">Active Products: {{ $activeProducts }}</span>
         </div>
 
         <!-- Total Categories -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="text-lg font-semibold">Total Categories</h3>
+            <h3 class="text-lg font-semibold">Total Kategori</h3>
             <p class="text-2xl">{{ $totalCategories }}</p>
             <span class="text-sm text-gray-500">With Products: {{ $categoriesWithProducts }}</span>
         </div>
 
         <!-- Total Brands -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="text-lg font-semibold">Total Brands</h3>
+            <h3 class="text-lg font-semibold">Total Brand</h3>
             <p class="text-2xl">{{ $totalBrands }}</p>
             <span class="text-sm text-gray-500">With Products: {{ $brandsWithProducts }}</span>
         </div>
 
         <!-- Total Orders -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="text-lg font-semibold">Total Orders</h3>
+            <h3 class="text-lg font-semibold">Total Pesanan</h3>
             <p class="text-2xl">{{ $totalOrders }}</p>
             <span class="text-sm text-gray-500">Pending: {{ $pendingOrders }} | Processing: {{ $processingOrders }}</span>
         </div>
@@ -35,8 +35,8 @@
         <!-- Recent Orders -->
         <div class="bg-white p-6 rounded-xl shadow">
             <div class="flex justify-between items-center mb-4">
-                <div class="text-gray-900 font-semibold text-lg">Recent Orders</div>
-                <a href="{{ route('detail_order.index') }}" class="text-red-600 text-sm">View All</a>
+                <div class="text-gray-900 font-semibold text-lg">Pesanan Terbaru</div>
+                <a href="{{ route('detail_order.index') }}" class="text-red-600 text-sm">Lihat Semua</a>
             </div>
             <div class="space-y-3">
                 @forelse ($recentOrders as $order)
@@ -60,8 +60,8 @@
         <!-- Recent Products -->
         <div class="bg-white p-6 rounded-xl shadow">
             <div class="flex justify-between items-center mb-4">
-                <div class="text-gray-900 font-semibold text-lg">Recent Products</div>
-                <a href="{{ route('products.index') }}" class="text-red-600 text-sm">View All</a>
+                <div class="text-gray-900 font-semibold text-lg">Produk Terbaru</div>
+                <a href="{{ route('products.index') }}" class="text-red-600 text-sm">Lihat Semua</a>
             </div>
             <div class="divide-y divide-gray-200">
                 @foreach ($recentProducts as $product)

@@ -1,7 +1,7 @@
 <x-layouts.app :title="__('Orders Detail')">
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl">Orders Management</flux:heading>
-        <flux:subheading size="lg" class="mb-6">Manage customer orders efficiently</flux:subheading>
+        <flux:heading size="xl">Manajemen pesanan</flux:heading>
+        <flux:subheading size="lg" class="mb-6">Manajemen pesanan pelanggan</flux:subheading>
         <flux:separator variant="subtle" />
     </div>
 
@@ -17,10 +17,10 @@
                 <tr>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Order ID</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Customer</th>
-                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Date</th>
+                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Tanggal</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Total</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Status</th>
-                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Actions</th>
+                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,7 +55,7 @@
                                 <flux:button icon:trailing="chevron-down" variant="subtle">Actions</flux:button>
                                 <flux:menu>
                                     <flux:menu.item icon="eye" href="{{ route('detail_order.edit', $order->id) }}">
-                                        View Detail
+                                        Lihat Detail
                                     </flux:menu.item>
                                 </flux:menu>
                             </flux:dropdown>

@@ -1,7 +1,7 @@
 <x-layouts.app :title="('Categories')">
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl">Product Categories</flux:heading>
-        <flux:subheading size="lg" class="mb-6">Manage product category data</flux:subheading>
+        <flux:heading size="xl">Kategori Produk</flux:heading>
+        <flux:subheading size="lg" class="mb-6">Manajemen data kategori produk</flux:subheading>
         <flux:separator variant="subtle" />
     </div>
 
@@ -12,24 +12,24 @@
     <flux:badge color="red" class="mb-3 w-full">{{ session('errorMessage') }}</flux:badge>
     @endif
 
-{{-- Search & Add New Category --}}
-<div class="flex justify-between items-center mb-4">
-    <form action="{{ route('categories.index') }}" method="get" class="w-full max-w-md">
-        <flux:input icon="magnifying-glass" name="q" value="{{ request('q') }}" placeholder="Search Categories" />
-    </form>
-    <flux:link href="{{ route('categories.create') }}" class="ml-4">
-        <flux:button icon="plus" variant="subtle">
-            Add New Category
-        </flux:button>
-    </flux:link>
-</div>
+    {{-- Search & Add New Category --}}
+    <div class="flex justify-between items-center mb-4">
+        <form action="{{ route('categories.index') }}" method="get" class="w-full max-w-md">
+            <flux:input icon="magnifying-glass" name="q" value="{{ request('q') }}" placeholder="Cari Kategori" />
+        </form>
+        <flux:link href="{{ route('categories.create') }}" class="ml-4">
+            <flux:button icon="plus" variant="subtle">
+                Tambah Kategori Baru
+            </flux:button>
+        </flux:link>
+    </div>
 
     {{-- Tabel Kategori --}}
     <div class="overflow-x-auto">
         <table class="min-w-full leading-normal">
             <thead>
                 <tr>
-                    @foreach(['ID', 'Image', 'Name', 'Slug', 'Description', 'On/Off', 'Actions'] as $heading)
+                    @foreach(['ID', 'Gambar', 'Nama', 'Slug', 'Deskripsi', 'On/Off', 'Aksi'] as $heading)
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase">
                         {{ $heading }}
                     </th>
@@ -42,13 +42,13 @@
                     {{-- ID --}}
                     <td class="px-5 py-5 border-b text-sm">{{ $category->id }}</td>
 
-                    {{-- Image --}}
+                    {{-- Gambar --}}
                     <td class="px-5 py-5 border-b text-sm">
                         @if($category->image)
                         <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
                             class="h-10 w-10 rounded object-cover">
                         @else
-                        <span class="text-gray-400 text-sm">No image</span>
+                        <span class="text-gray-400 text-sm">Tidak ada gambar</span>
                         @endif
                     </td>
 
@@ -61,17 +61,17 @@
                     {{-- Description --}}
                     <td class="px-5 py-5 border-b text-sm">{{ $category->description ?? '-' }}</td>
 
- <td>
-    <form id="sync-category-{{ $category->id }}" action="{{ route('category.sync', $category->id) }}" method="POST">
-        @csrf
-        <input type="hidden" name="is_active" value="@if($category->hub_category_id) 1 @else 0 @endif" >
-          @if($category->hub_category_id)
-              <flux:switch checked onchange="document.getElementById('sync-category-{{ $category->id }}').submit()" />
-          @else
-              <flux:switch onchange="document.getElementById('sync-category-{{ $category->id }}').submit()" />
-          @endif
-    </form>
-  </td>
+                    <td>
+                        <form id="sync-category-{{ $category->id }}" action="{{ route('category.sync', $category->id) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="is_active" value="@if($category->hub_category_id) 1 @else 0 @endif">
+                            @if($category->hub_category_id)
+                            <flux:switch checked onchange="document.getElementById('sync-category-{{ $category->id }}').submit()" />
+                            @else
+                            <flux:switch onchange="document.getElementById('sync-category-{{ $category->id }}').submit()" />
+                            @endif
+                        </form>
+                    </td>
 
 
 

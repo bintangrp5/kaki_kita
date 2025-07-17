@@ -1,7 +1,7 @@
 <x-layouts.app :title="__('Categories')">
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl">Update Product Categories</flux:heading>
-        <flux:subheading size="lg" class="mb-6">Manage data Product
+        <flux:heading size="xl">Perbarui Kategori Produk</flux:heading>
+        <flux:subheading size="lg" class="mb-6">Mengatur data Produk
             Categories</flux:heading>
             <flux:separator variant="subtle" />
     </div>
@@ -27,7 +27,7 @@
         <flux:input type="file" label="Image" name="image" class="mb-3" />
         <flux:separator />
         <div class="mt-4">
-            <flux:button type="submit" variant="primary">Update</flux:button>
+            <flux:button type="submit" variant="primary">Perbarui</flux:button>
             <flux:link href="{{ route('categories.index') }}" variant="ghost"
                 class="ml-3">Kembali</flux:link>
         </div>

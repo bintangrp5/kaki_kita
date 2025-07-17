@@ -1,7 +1,7 @@
 <x-layouts.app :title="__('Products')">
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl">Add New Product</flux:heading>
-        <flux:subheading size="lg" class="mb-6">Manage data Products</flux:subheading>
+        <flux:heading size="xl">Tambah Produk Baru</flux:heading>
+        <flux:subheading size="lg" class="mb-6">Mengelola data Produk</flux:subheading>
         <flux:separator variant="subtle" />
     </div>
 
@@ -15,19 +15,19 @@
         @csrf
 
         <flux:input label="Name" name="name" class="mb-3" placeholder="Product Name" value="{{ old('name') }}" />
-<flux:select label="Category" name="category_slug" class="mb-3">
-    <option value="">-- Pilih Kategori --</option>
-    @foreach ($categories as $category)
-        <option value="{{ $category->slug }}"
-            @selected(old('category_slug', $product->category_slug ?? '') == $category->slug)>
-            {{ $category->name }}
-        </option>
-    @endforeach
-</flux:select>
+        <flux:select label="Category" name="category_slug" class="mb-3">
+            <option value="">-- Pilih Kategori --</option>
+            @foreach ($categories as $category)
+            <option value="{{ $category->slug }}"
+                @selected(old('category_slug', $product->category_slug ?? '') == $category->slug)>
+                {{ $category->name }}
+            </option>
+            @endforeach
+        </flux:select>
 
 
         <flux:select label="Brand" name="brand_id" class="mb-3">
-            <option value="">Select Brand</option>
+            <option value="">Pilih Brand</option>
             @foreach ($brands as $brand)
             <option value="{{ $brand->id }}" @selected(old('brand_id')==$brand->id)>
                 {{ $brand->name }}

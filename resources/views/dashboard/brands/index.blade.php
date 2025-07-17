@@ -1,19 +1,19 @@
 <x-layouts.app :title="__('Brands')">
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl">Brands</flux:heading>
-        <flux:subheading size="lg" class="mb-6">Manage your product brands</flux:subheading>
+        <flux:heading size="xl">Brand</flux:heading>
+        <flux:subheading size="lg" class="mb-6">Manajemen merek produk</flux:subheading>
         <flux:separator variant="subtle" />
     </div>
 
     <div class="flex justify-between items-center mb-4">
         <div>
             <form action="{{ route('brands.index') }}" method="get">
-                <flux:input icon="magnifying-glass" name="q" value="{{ request('q') }}" placeholder="Search Brands" />
+                <flux:input icon="magnifying-glass" name="q" value="{{ request('q') }}" placeholder="Cari Brand" />
             </form>
         </div>
         <div>
             <flux:button icon="plus">
-                <flux:link href="{{ route('brands.create') }}" variant="subtle">Add New Brand</flux:link>
+                <flux:link href="{{ route('brands.create') }}" variant="subtle">Tambah Brand Baru</flux:link>
             </flux:button>
         </div>
     </div>
@@ -30,23 +30,23 @@
                 <tr>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Logo</th>
-                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Name</th>
+                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nama</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Kategori</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Slug</th>
-                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Description</th>
+                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Deskripsi</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Order</th>
-                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                    <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($brands as $key => $brand)
                 <tr>
-			<td class="px-5 py-5 border-b text-sm">
+                    <td class="px-5 py-5 border-b text-sm">
                         {{ $key + 1 }}
                     </td>
                     <td class="px-5 py-5 border-b text-sm">
-				@if($brand->image)
+                        @if($brand->image)
                         <img src="{{ Storage::url($brand->image) }}" alt="{{ $brand->name }}" class="h-10 w-10 rounded object-cover">
                         @else
                         <div class="h-10 w-10 flex rounded object-cover">
@@ -87,7 +87,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="text-center text-gray-500 py-4">No brands found.</td>
+                    <td colspan="8" class="text-center text-gray-500 py-4">Tidak ada merek yang ditemukan.</td>
                 </tr>
                 @endforelse
             </tbody>

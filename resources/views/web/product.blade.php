@@ -17,12 +17,6 @@
                         alt="{{ $product->name }}"
                         class="card-img-top">
                 </div>
-                <div class="mt-3">
-                    <span class="badge bg-secondary">{{ $product->category->name ?? 'Kategori Tidak Diketahui' }}</span>
-                </div>
-                <div class="mt-3">
-                    <span class="badge bg-secondary">{{ $product->brand->name ?? 'Brand Tidak Diketahui' }}</span>
-                </div>
             </div>
             <div class="col-md-6">
                 <h1 class="mb-2 fw-bold">{{ $product->name }}</h1>
@@ -56,6 +50,10 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span><strong>Kategori:</strong></span>
                         <span>{{ $product->category->name ?? '-' }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><strong>Brand:</strong></span>
+                        <span>{{ $product->brand->name ?? '-' }}</span>
                     </li>
                 </ul>
             </div>

@@ -1,7 +1,7 @@
 <x-layouts.app :title="__('Edit Product')">
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl">Edit Product</flux:heading>
-        <flux:subheading size="lg" class="mb-6">Manage and Update Product Data</flux:subheading>
+        <flux:heading size="xl">Edit Produk</flux:heading>
+        <flux:subheading size="lg" class="mb-6">Manajemen dan Update Data Produk</flux:subheading>
         <flux:separator variant="subtle" />
     </div>
 
@@ -17,21 +17,21 @@
 
         <flux:input label="Name" name="name" class="mb-3" placeholder="Product Name" value="{{ old('name', $product->name) }}" />
 
-<flux:select label="Category" name="category_slug" class="mb-3">
-    <option value="">-- Pilih Kategori --</option>
-    @foreach ($categories as $category)
-        <option value="{{ $category->slug }}"
-            @selected(old('category_slug', optional($product->category)->slug ?? '') == $category->slug)>
-            {{ $category->name }}
-        </option>
-    @endforeach
-</flux:select>
+        <flux:select label="Category" name="category_slug" class="mb-3">
+            <option value="">-- Pilih Kategori --</option>
+            @foreach ($categories as $category)
+            <option value="{{ $category->slug }}"
+                @selected(old('category_slug', optional($product->category)->slug ?? '') == $category->slug)>
+                {{ $category->name }}
+            </option>
+            @endforeach
+        </flux:select>
 
 
         <flux:select label="Brand" name="brand_id" class="mb-3">
-            <option value="">Select Brand</option>
+            <option value="">Pilih Brand</option>
             @foreach ($brands as $brand)
-                <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
+            <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
             @endforeach
         </flux:select>
         <flux:input label="Slug" name="slug" class="mb-3" placeholder="product-name" value="{{ old('slug', $product->slug) }}" />
@@ -39,7 +39,7 @@
         <flux:textarea label="Description" name="description" class="mb-3" placeholder="Product Description">{{ old('description', $product->description) }}</flux:textarea>
         <flux:input label="Price" name="price" type="number" class="mb-3" placeholder="Product Price" value="{{ old('price', $product->price) }}" />
         <flux:input label="Stock" name="stock" type="number" class="mb-3" placeholder="Available Stock" value="{{ old('stock', $product->stock) }}" />
-        
+
         <div class="mb-3">
             <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
             <input type="file" name="image" id="image" class="mt-1 block w-full text-sm text-gray-500 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-md" />
@@ -47,8 +47,8 @@
             <div class="mt-2">
                 <img src="{{ asset($product->image_url) }}" alt="Product Image" class="w-32 h-32 object-cover">
 
-                    <p class="text-sm text-gray-500 mt-2">Current Image</p>
-                </div>
+                <p class="text-sm text-gray-500 mt-2">Gambar Saat Ini</p>
+            </div>
             @endif
         </div>
 

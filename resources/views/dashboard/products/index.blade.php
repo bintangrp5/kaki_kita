@@ -1,7 +1,7 @@
 <x-layouts.app :title="__('Products')">
     <div class="relative mb-6 w-full">
-        <flux:heading size="xl">Products</flux:heading>
-        <flux:subheading size="lg" class="mb-6">Manage data Products</flux:subheading>
+        <flux:heading size="xl">Produk</flux:heading>
+        <flux:subheading size="lg" class="mb-6">Manajemen data produk</flux:subheading>
         <flux:separator variant="subtle" />
     </div>
 
@@ -9,10 +9,10 @@
     <div class="flex justify-between items-center mb-4">
         <form action="{{ route('products.index') }}" method="get">
             @csrf
-            <flux:input icon="magnifying-glass" name="q" value="{{ $q ?? '' }}" placeholder="Search Products" />
+            <flux:input icon="magnifying-glass" name="q" value="{{ $q ?? '' }}" placeholder="Cari Produk" />
         </form>
         <flux:button icon="plus">
-            <flux:link href="{{ route('products.create') }}" variant="subtle">Add New Product</flux:link>
+            <flux:link href="{{ route('products.create') }}" variant="subtle">Tambah Produk Baru</flux:link>
         </flux:button>
     </div>
 
@@ -28,7 +28,7 @@
         <table class="min-w-full leading-normal">
             <thead>
                 <tr>
-                    @foreach(['ID', 'Image', 'Name', 'Slug', 'Kategori', 'Brand', 'SKU', 'Harga (Rp)', 'Stock', 'Status', 'Created At','On/Off', 'Actions'] as $heading)
+                    @foreach(['ID', 'Gambar', 'Nama', 'Slug', 'Kategori', 'Brand', 'SKU', 'Harga (Rp)', 'Stock', 'Status', 'Created At','On/Off', 'Aksi'] as $heading)
                     <th class="px-5 py-3 border-b-2 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                         {{ $heading }}
                     </th>
@@ -44,8 +44,8 @@
                     {{-- Image --}}
                     <td class="px-5 py-5 border-b text-sm">
                         @if($product->image_url)
-                        <img src="{{ Storage::url($product->image_url) }}" alt="{{ $product->name }}" 
-				class="h-10 w-10 rounded object-cover">
+                        <img src="{{ Storage::url($product->image_url) }}" alt="{{ $product->name }}"
+                            class="h-10 w-10 rounded object-cover">
                         @else
                         <div class="h-10 w-10 rounded object-cover">
                             <span class="text-gray-500 text-sm">N/A</span>
@@ -59,7 +59,7 @@
                     {{-- Slug --}}
                     <td class="px-5 py-5 border-b text-sm">{{ $product->slug }}</td>
 
-		    {{-- Kategori --}}
+                    {{-- Kategori --}}
                     <td class="px-5 py-5 border-b text-sm">{{ $product->category->name ?? '-' }}</td>
 
 
