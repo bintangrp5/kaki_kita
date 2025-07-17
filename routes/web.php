@@ -18,7 +18,7 @@ use App\Http\Controllers\CheckoutController;
 
 
 Route::get('/', [HomepageController::class, 'index'])->name('home');
-// Route::get('products', [HomepageController::class, 'products'])->name('products');
+Route::get('products', [HomepageController::class, 'products'])->name('products');
 Route::get('product/{slug}', [HomepageController::class, 'product'])->name('product.show');
 Route::get('categories_brand', [HomepageController::class, 'categories_brand']);
 Route::get('category/{slug}', [HomepageController::class, 'category']);
