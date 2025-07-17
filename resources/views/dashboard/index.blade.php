@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <!-- Total Products -->
         <div class="bg-white p-4 rounded shadow">
-            <h3 class="text-lg font-semibold">Total Products</h3>
+            <h3 class="text-lg font-semibold">Total ProductsNYA iniiiiiii</h3>
             <p class="text-2xl">{{ $totalProducts }}</p>
             <span class="text-sm text-gray-500">Active Products: {{ $activeProducts }}</span>
         </div>
