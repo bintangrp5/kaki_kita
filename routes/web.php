@@ -72,11 +72,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth', 'verified']], fu
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', ProductController::class);
     Route::resource('categories', ProductCategoryController::class)->except(['show']); 
-
-    Route::resource('products', ProductController::class);
     Route::resource('brands', BrandController::class);
-    Route::resource('detail_order', DetailOrderController::class);
-    Route::get('detail_order/{id}/show', [DetailOrderController::class, 'show'])->name('admin.detail_order.show');
+    // Route::get('detail_order/{id}/show', [DetailOrderController::class, 'show'])->name('admin.detail_order.show');    
+    Route::resource('detail_order', DetailOrderController::class)->names('admin.detail_order');
     // Route::get('detail_order/{id}/show', [DetailOrderController::class, 'show'])->name('detail_order.show');
 
     

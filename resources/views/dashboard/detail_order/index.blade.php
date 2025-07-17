@@ -58,6 +58,7 @@
                                     Lihat Detail
                                 </flux:menu.item>
 
+
                             </flux:menu>
                         </flux:dropdown>
                     </td>
