@@ -20,6 +20,6 @@ class OrderController extends Controller
         $user = auth()->guard('customer')->user();
         $order = Order::where('customer_id', $user->id)->findOrFail($id);
 
-        return view('order_detail', compact('order'));
+        return view('web.order_detail', compact('order'));
     }
 }
