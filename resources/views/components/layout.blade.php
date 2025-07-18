@@ -150,7 +150,7 @@ text-decoration-none">Beranda</a></li>
 text-decoration-none">Kategori</a></li>
                         <li><a href="/products" class="text-white
 text-decoration-none">Produk</a></li>
-                        <li><a href="#" class="text-white
+                        <li><a href="/kontak" class="text-white
 text-decoration-none">Kontak</a></li>
                     </ul>
                 </div>

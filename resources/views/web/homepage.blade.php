@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot name="title"> Homepage</x-slot>
+    <x-slot name="title">KakiKita</x-slot>
     <div class="container py-3">
         <div class="container" style="padding-top: 1rem; padding-bottom: 1rem;">
             <div class="banner-container" style="position: relative; overflow: hidden; height: 350px;"

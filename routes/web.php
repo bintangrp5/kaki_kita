@@ -25,6 +25,8 @@ Route::get('category/{slug}', [HomepageController::class, 'category']);
 Route::get('brands', [BrandController::class, 'index'])->name('brands.index');
 Route::get('cart', [HomepageController::class, 'cart'])->name('cart.index');
 Route::get('/categories/{id}', [ProductCategoryController::class, 'show'])->name('categories.show');
+Route::get('/kontak', [HomepageController::class, 'kontak'])->name('kontak');
+Route::post('/kontak/kirim', [HomepageController::class, 'kirimPesan'])->name('kirim.pesan');
 
 
 Route::patch('/products/{id}/toggle-status', [ProductController::class, 'toggleStatus'])->name('products.toggleStatus');

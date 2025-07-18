@@ -69,35 +69,35 @@ class HomepageController extends Controller
     }
 
     public function categories_brand(Request $request)
-{
-    $categories = Categories::all();
-    $brandSlug = $request->query('brand'); // Ambil slug brand dari query string
+    {
+        $categories = Categories::all();
+        $brandSlug = $request->query('brand'); // Ambil slug brand dari query string
 
-    if ($brandSlug) {
-        $brand = Brand::where('slug', $brandSlug)->first();
+        if ($brandSlug) {
+            $brand = Brand::where('slug', $brandSlug)->first();
 
-        if (!$brand) {
-            abort(404); // Jika brand tidak ditemukan
+            if (!$brand) {
+                abort(404); // Jika brand tidak ditemukan
+            }
+
+            // Ambil semua produk berdasarkan brand tersebut
+            $products = Product::with(['brand', 'category'])
+                ->where('brand_id', $brand->id)
+                ->latest()
+                ->paginate(20);
+        } else {
+            // Jika tidak ada brand dipilih, bisa tampilkan semua produk atau kosongkan
+            $products = Product::with(['brand', 'category'])
+                ->latest()
+                ->paginate(20);
         }
 
-        // Ambil semua produk berdasarkan brand tersebut
-        $products = Product::with(['brand', 'category'])
-            ->where('brand_id', $brand->id)
-            ->latest()
-            ->paginate(20);
-    } else {
-        // Jika tidak ada brand dipilih, bisa tampilkan semua produk atau kosongkan
-        $products = Product::with(['brand', 'category'])
-            ->latest()
-            ->paginate(20);
+        return view($this->themeFolder . '.categories_brand', [
+            'title' => 'Brands',
+            'categories' => $categories,
+            'products' => $products,
+        ]);
     }
-
-    return view($this->themeFolder . '.categories_brand', [
-        'title' => 'Brands',
-        'categories' => $categories,
-        'products' => $products,
-    ]);
-}
 
 
     public function category($slug, Request $request)
@@ -121,43 +121,62 @@ class HomepageController extends Controller
         }
 
         $products = $query->paginate(20);
-	
-	$categories = Categories::all();
+
+        $categories = Categories::all();
 
         return view($this->themeFolder . '.category_by_slug', [
             'slug' => $slug,
             'category' => $category,
             'products' => $products,
-	    'categories' => $categories,
+            'categories' => $categories,
         ]);
     }
-public function cart()
-{
-    $user = auth()->guard('customer')->user(); // Pastikan pakai guard 'customer' seperti sebelumnya
+    public function cart()
+    {
+        $user = auth()->guard('customer')->user(); // Pastikan pakai guard 'customer' seperti sebelumnya
 
-    $cart = \App\Models\Cart::with(['items', 'items.itemable'])
-        ->where('user_id', $user->id)
-        ->first();
+        $cart = \App\Models\Cart::with(['items', 'items.itemable'])
+            ->where('user_id', $user->id)
+            ->first();
 
-    return view($this->themeFolder . '.cart', [
-        'title' => 'Keranjang Belanja',
-        'cart' => $cart, // <-- INI WAJIB ADA
-    ]);
-}
+        return view($this->themeFolder . '.cart', [
+            'title' => 'Keranjang Belanja',
+            'cart' => $cart, // <-- INI WAJIB ADA
+        ]);
+    }
 
 
+    // Halaman kontak
+    public function kontak()
+    {
+        return view($this->themeFolder . '.kontak', [
+            'title' => 'Kontak Kami'
+        ]);
+    }
 
+    // Proses form kontak
+    public function kirimPesan(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:100',
+            'email' => 'required|email',
+            'pesan' => 'required|string|max:1000',
+        ]);
+
+        // Tambahkan logika sesuai kebutuhan: kirim email / simpan ke DB / dll
+
+        return redirect()->route('kontak')->with('success', 'Pesan kamu berhasil dikirim!');
+    }
 
     public function checkout()
-{
-    $cart = Cart::with(['items', 'items.itemable'])
-        ->where('user_id', auth()->guard('customer')->id())
-        ->first();
+    {
+        $cart = Cart::with(['items', 'items.itemable'])
+            ->where('user_id', auth()->guard('customer')->id())
+            ->first();
 
-    return view($this->themeFolder . '.checkout', [
-        'title' => 'Checkout',
-        'cart' => $cart
-    ]);
-}
-
+        return view($this->themeFolder . '.checkout', [
+            'title' => 'Checkout',
+            'cart' => $cart
+        ]);
+    }
 }
